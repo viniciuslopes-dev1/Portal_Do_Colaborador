@@ -55,3 +55,9 @@ Usuário confirmou identidade/acessos A/B/RH, bloqueios fora das listas e extern
 ## Interface da Etapa 03
 
 HTML separado por aplicativo em Index/Styles/Scripts, com templates montados apenas após autorização no doGet. Includes privados por allowlist, sem seleção por parâmetros externos. obterSessao mantém reautorização. Fixtures client-side são somente demonstração; não representam cadastro, documentos reais ou integração. Sem escopos adicionais.
+
+## Etapa 04 - integração Drive do piloto
+
+Associação temporária privada em Script Properties PILOTO_DRIVE_MAPA fixa conta/pasta/documentos fictícios. Fonte atual é a configuração administrativa, reavaliada em cada chamada; não usa JSON descoberto pelo nome, não acessa planilha RH nem cria índice automático. Drive API v3 no portal, supportsAllDrives e drive.readonly. Antes de retornar links, reautorizar sessão, verificar referência na própria lista e metadados Drive (pasta direta, MIME PDF, sem lixeira/atalho). O Drive continua aplicando ACL no navegador. RH permanece com escopo só e-mail. Mapa manual não é arquitetura operacional final.
+
+Etapa 04 entregue localmente: Drive.gs implementa listarHolerites/obterLinkHolerite, com referência própria antes de IO, metadados PDF/pasta/ACL e links somente retornados pela API. Lista não retorna URLs. Frontend deixa fixtures documentais e usa RPC, com controle de chamadas antigas, limpeza e nova autorização em cada tentativa. 72 testes com mocks e revisão independente concluídos; testes Google reais pendentes.

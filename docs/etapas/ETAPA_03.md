@@ -2,7 +2,7 @@
 
 ## Identificação
 
-Status: AGUARDANDO_TESTE. Autorização explícita do usuário após conclusão da Etapa 02. Agentes: frontend (HTML/CSS/JS), backend (templates e regressão da autenticação), segurança (revisão independente); coordenação e validação local pelo agente principal.
+Status: CONCLUIDA. Autorização explícita do usuário após conclusão da Etapa 02. Agentes: frontend (HTML/CSS/JS), backend (templates e regressão da autenticação), segurança (revisão independente); coordenação e validação local pelo agente principal.
 
 ## Objetivo e pré-requisitos
 
@@ -87,3 +87,8 @@ Entrega local finalizada; Etapa 03 AGUARDANDO_TESTE. Etapa 04 não iniciada. Con
 ## Ajustes finais verificados
 
 E-mail fictício longo testado em 320px sem overflow da página. Perfil permite quebra de palavras. Divisórias combinam transparência e recorte afinado. Menu aberto em mobile foi redimensionado a desktop: open=false e main.inert=false, preservando operação do conteúdo. Sintaxe dos dois scripts cliente revalidada após os ajustes.
+
+
+## Fechamento aprovado pelo usuário
+
+Usuário informou “tudo conferido, próximo passo” após entrega e instruções de validação da interface. Aceite manual do piloto registrado e continuidade para Etapa 04 autorizada. Não houve inspeção independente das implantações pelo agente nem certificação WCAG; registros anteriores de pendências preservam o histórico. Etapa 03 CONCLUIDA no piloto.

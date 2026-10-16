@@ -40,3 +40,5 @@ D12. Usuário solicitou organizar o projeto diretamente na raiz e manter commits
 D13. Etapa 02 concluída com testes locais e confirmações manuais explícitas de acesso, negação, revogação e implantação. Não representa validação das integrações futuras ou produção. Etapa 03 permanece sujeita a autorização.
 
 D14. Usuário autorizou Etapa 03. Apenas interface com dados fictícios, preservando autenticação, sem operações de etapas futuras. Nome/setor demonstrativos não serão apresentados como dados reais da conta; ações de documentos ainda indisponíveis serão explicitadas.
+
+D15. Usuário validou a Etapa 03 e autorizou Etapa 04. Associação privada manual conta→pasta→documentos somente para PDFs fictícios de teste; não é cadastro nem publicação de índices. Fonte final/cadastro por funcionario_id permanecem para Etapa 05. Apenas portal recebe Drive em leitura; RH não muda.

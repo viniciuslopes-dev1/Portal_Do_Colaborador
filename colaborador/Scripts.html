@@ -1,57 +1,34 @@
 <script>
   (function () {
     "use strict";
-    const ROLE = "COLABORADOR";
-    const isRh = ROLE === "RH";
     const byId = (id) => document.getElementById(id);
     const app = byId("app");
     const sessionPanel = byId("session-panel");
     const sidebar = byId("sidebar");
     const menuButton = byId("open-menu");
+    const months = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+    const pendingWindows = new Set();
     let requestedView = "overview";
     let generation = 0;
+    let listVersion = 0;
+    let actionVersion = 0;
     let authorized = false;
-    let timeout;
-    const documents = [
-      { month: "Setembro", year: "2026", date: "05/10/2026" },
-      { month: "Agosto", year: "2026", date: "04/09/2026" },
-      { month: "Julho", year: "2026", date: "05/08/2026" },
-      { month: "Junho", year: "2026", date: "03/07/2026" },
-      { month: "Dezembro", year: "2025", date: "05/01/2026" },
-      { month: "Novembro", year: "2025", date: "05/12/2025" },
-    ];
-    const people = [
-      {
-        name: "Ana de Exemplo",
-        email: "ana@example.invalid",
-        sector: "Administrativo",
-        status: "Ativo",
-      },
-      {
-        name: "Bruno de Exemplo",
-        email: "bruno@example.invalid",
-        sector: "Operações",
-        status: "Ativo",
-      },
-      {
-        name: "Carla de Exemplo",
-        email: "carla@example.invalid",
-        sector: "Financeiro",
-        status: "Ativo",
-      },
-      {
-        name: "Daniel de Exemplo",
-        email: "daniel@example.invalid",
-        sector: "Operações",
-        status: "Inativo",
-      },
-      {
-        name: "Elisa de Exemplo",
-        email: "elisa@example.invalid",
-        sector: "Administrativo",
-        status: "Ativo",
-      },
-    ];
+    let documents = [];
+    let selectedYear = "";
+    let pendingButton = null;
     function element(tag, text, className) {
       const node = document.createElement(tag);
       if (text !== undefined) node.textContent = text;
@@ -66,7 +43,102 @@
       menuButton.setAttribute("aria-expanded", "false");
       if (restore) menuButton.focus();
     }
-    function table(target, headers, rows, kind, emptyText) {
+    function closeWindow(handle) {
+      if (!handle) return;
+      pendingWindows.delete(handle);
+      try {
+        handle.close();
+      } catch (error) {
+        /* Janela já encerrada. */
+      }
+    }
+    function clearActions() {
+      actionVersion++;
+      pendingWindows.forEach(closeWindow);
+      pendingWindows.clear();
+      if (pendingButton) pendingButton.disabled = false;
+      pendingButton = null;
+      byId("action-state").textContent = "";
+      byId("authorized-link").hidden = true;
+      byId("authorized-link").onclick = null;
+    }
+    function clearDocuments() {
+      clearActions();
+      documents = [];
+      byId("latest-document").replaceChildren();
+      byId("recent-table").replaceChildren();
+      byId("history-table").replaceChildren();
+      byId("year").replaceChildren();
+      byId("year").disabled = true;
+    }
+    function clearData() {
+      authorized = false;
+      app.hidden = true;
+      byId("account").textContent = "";
+      byId("profile-email").textContent = "";
+      clearDocuments();
+      byId("documents-state").textContent = "";
+      byId("retry-documents").hidden = true;
+      closeMenu(false);
+    }
+    function denySession(denied) {
+      generation++;
+      listVersion++;
+      clearData();
+      sessionPanel.hidden = false;
+      byId("session-heading").textContent = denied
+        ? "Acesso negado"
+        : "Não foi possível verificar";
+      byId("session-state").textContent = denied
+        ? "Esta conta não está autorizada neste ambiente. Procure o responsável pelo piloto."
+        : "Houve uma falha ao consultar a sessão. Tente novamente.";
+      byId("retry").disabled = false;
+      byId("session-heading").focus();
+    }
+    // Cada chamada tem prazo e geração próprios; callbacks antigos nunca restauram dados.
+    function call(method, args, token, callback) {
+      let done = false;
+      const timer = setTimeout(() => finish(null), 20000);
+      function finish(response) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        if (token !== generation) return;
+        callback(response);
+      }
+      try {
+        const runner = google.script.run
+          .withSuccessHandler(finish)
+          .withFailureHandler(() => finish(null));
+        runner[method](...args);
+      } catch (error) {
+        finish(null);
+      }
+    }
+    function competencyLabel(value) {
+      const parts = value.split("-");
+      return months[Number(parts[1]) - 1] + " de " + parts[0];
+    }
+    function documentActions(row) {
+      const actions = element("div", undefined, "actions");
+      [
+        ["VISUALIZAR", "Visualizar"],
+        ["BAIXAR", "Baixar PDF"],
+      ].forEach(([action, label]) => {
+        const button = element("button", label);
+        button.type = "button";
+        button.setAttribute(
+          "aria-label",
+          label + " — " + competencyLabel(row.competencia) + " (nova aba)",
+        );
+        button.addEventListener("click", () =>
+          openDocument(row.arquivo_id, action, button),
+        );
+        actions.append(button);
+      });
+      return actions;
+    }
+    function table(target, rows, emptyText) {
       const container = byId(target);
       container.replaceChildren();
       if (!rows.length) {
@@ -76,56 +148,35 @@
       const wrap = element("div", undefined, "table-wrap");
       wrap.tabIndex = 0;
       wrap.setAttribute("role", "region");
-      wrap.setAttribute(
-        "aria-label",
-        isRh
-          ? "Lista demonstrativa de funcionários"
-          : "Lista demonstrativa de holerites",
-      );
+      wrap.setAttribute("aria-label", "Lista de holerites autorizados");
       const tbl = element("table");
-      const caption = element(
-        "caption",
-        isRh ? "Funcionários fictícios" : "Holerites fictícios",
-      );
+      const caption = element("caption", "Holerites disponíveis");
       caption.className = "eyebrow";
       caption.style.textAlign = "left";
       caption.style.padding = "12px 0";
       tbl.append(caption);
       const head = element("thead");
       const headRow = element("tr");
-      headers.forEach((label) => {
-        const th = element("th", label);
-        th.scope = "col";
-        headRow.append(th);
-      });
+      ["Mês de referência", "Tipo", "Disponível desde", "Ações"].forEach(
+        (label) => {
+          const th = element("th", label);
+          th.scope = "col";
+          headRow.append(th);
+        },
+      );
       head.append(headRow);
       tbl.append(head);
       const body = element("tbody");
       rows.forEach((row) => {
         const tr = element("tr");
-        if (kind === "people") {
-          const name = element("td", row.name);
-          name.append(element("small", row.email));
-          tr.append(name, element("td", row.sector));
-          const status = element("td");
-          status.append(element("span", row.status, "status"));
-          tr.append(status);
-        } else {
-          tr.append(
-            element("td", row.month + " de " + row.year),
-            element("td", "Folha mensal"),
-            element("td", row.date),
-          );
-          const actions = element("td");
-          ["Visualizar", "Baixar PDF"].forEach((label) => {
-            const button = element("button", label);
-            button.type = "button";
-            button.disabled = true;
-            button.title = "Demonstração: nenhum PDF conectado";
-            actions.append(button);
-          });
-          tr.append(actions);
-        }
+        tr.append(
+          element("td", competencyLabel(row.competencia)),
+          element("td", "Folha mensal"),
+          element("td", "Não informada"),
+        );
+        const actions = element("td");
+        actions.append(documentActions(row));
+        tr.append(actions);
         body.append(tr);
       });
       tbl.append(body);
@@ -134,49 +185,43 @@
     }
     function render() {
       if (!authorized) return;
-      if (isRh) {
-        const query = byId("search").value.trim().toLocaleLowerCase("pt-BR");
-        const sector = byId("sector").value;
-        const filtered = people.filter(
-          (p) =>
-            (!sector || p.sector === sector) &&
-            (!query ||
-              (p.name + " " + p.email)
-                .toLocaleLowerCase("pt-BR")
-                .includes(query)),
+      const latest = byId("latest-document");
+      latest.replaceChildren();
+      if (documents.length) {
+        const row = documents[0];
+        const block = element("div", undefined, "latest");
+        const description = element("div");
+        description.append(
+          element("p", "Folha mensal", "eyebrow"),
+          element("p", competencyLabel(row.competencia), "month"),
+          element("p", "Data de disponibilização não informada.", "muted"),
         );
-        table(
-          "recent-table",
-          ["Funcionário", "Setor", "Situação"],
-          people.slice(0, 3),
-          "people",
-          "Nenhum funcionário.",
+        block.append(description, documentActions(row));
+        latest.append(block);
+      } else
+        latest.append(
+          element(
+            "p",
+            "Você ainda não tem holerites disponíveis. Se precisar de ajuda, procure o RH pelos canais internos.",
+            "empty",
+          ),
         );
-        table(
-          "history-table",
-          ["Funcionário", "Setor", "Situação"],
-          filtered,
-          "people",
-          "Nenhum funcionário encontrado. Revise a busca ou limpe os filtros.",
-        );
-        byId("result-count").textContent =
-          filtered.length + " de " + people.length + " funcionários fictícios";
-      } else {
-        table(
-          "recent-table",
-          ["Mês de referência", "Tipo", "Disponível desde", "Ações"],
-          documents.slice(1, 4),
-          "documents",
-          "Você ainda não tem holerites disponíveis.",
-        );
-        table(
-          "history-table",
-          ["Mês de referência", "Tipo", "Disponível desde", "Ações"],
-          documents.filter((d) => d.year === byId("year").value),
-          "documents",
-          "Nenhum documento neste período. Selecione outro ano.",
-        );
-      }
+      table(
+        "recent-table",
+        documents.slice(1, 4),
+        documents.length
+          ? "Não há holerites anteriores."
+          : "Você ainda não tem holerites disponíveis.",
+      );
+      table(
+        "history-table",
+        documents.filter(
+          (row) => row.competencia.slice(0, 4) === byId("year").value,
+        ),
+        documents.length
+          ? "Nenhum documento neste período. Selecione outro ano."
+          : "Você ainda não tem holerites disponíveis.",
+      );
     }
     function showView(view, focus) {
       document.querySelectorAll("[data-view]").forEach((section) => {
@@ -192,28 +237,214 @@
           ? "Visão geral"
           : view === "help"
             ? "Ajuda"
-            : isRh
-              ? "Funcionários"
-              : "Holerites";
+            : "Holerites";
       closeMenu(false);
       if (focus) {
         const heading = document.querySelector('[data-view="' + view + '"] h1');
         if (heading) heading.focus();
       }
     }
-    function clearData() {
-      authorized = false;
-      app.hidden = true;
-      byId("account").textContent = "";
-      if (byId("profile-email")) byId("profile-email").textContent = "";
-      byId("recent-table").replaceChildren();
-      byId("history-table").replaceChildren();
-      if (byId("result-count")) byId("result-count").textContent = "";
-      closeMenu(false);
+    function documentError(response) {
+      if (response && response.codigo === "ACESSO_NEGADO") {
+        denySession(true);
+        return;
+      }
+      const config =
+        response &&
+        ["CONFIGURACAO_PENDENTE", "CONFIGURACAO_INVALIDA"].includes(
+          response.codigo,
+        );
+      byId("documents-state").textContent = config
+        ? "Os documentos ainda não estão disponíveis neste ambiente. Procure o responsável pelo piloto para revisar a configuração."
+        : "Não foi possível carregar os documentos. Tente novamente.";
+      byId("retry-documents").hidden = false;
+      byId("retry-documents").disabled = false;
+    }
+    function loadDocuments() {
+      if (!authorized) return;
+      const token = generation,
+        version = ++listVersion;
+      clearDocuments();
+      byId("documents-state").textContent = "Carregando seus documentos…";
+      byId("retry-documents").hidden = true;
+      call("listarHolerites", [], token, (response) => {
+        if (version !== listVersion) return;
+        if (
+          !response ||
+          response.resultado !== "SUCESSO" ||
+          response.codigo !== "HOLERITES_LISTADOS" ||
+          !Array.isArray(response.documentos)
+        ) {
+          documentError(response);
+          return;
+        }
+        const seen = new Set();
+        const valid =
+          response.documentos.length <= 100 &&
+          response.documentos.every((row) => {
+            if (
+              !row ||
+              typeof row.arquivo_id !== "string" ||
+              !/^[A-Za-z0-9_-]{10,200}$/.test(row.arquivo_id) ||
+              typeof row.competencia !== "string" ||
+              !/^\d{4}-(0[1-9]|1[0-2])$/.test(row.competencia) ||
+              seen.has(row.arquivo_id)
+            )
+              return false;
+            seen.add(row.arquivo_id);
+            return true;
+          });
+        if (!valid) {
+          documentError(null);
+          return;
+        }
+        documents = response.documentos
+          .map((row) => ({
+            arquivo_id: row.arquivo_id,
+            competencia: row.competencia,
+          }))
+          .sort((a, b) => b.competencia.localeCompare(a.competencia));
+        const years = Array.from(
+          new Set(documents.map((row) => row.competencia.slice(0, 4))),
+        );
+        years.forEach((year) => {
+          const option = element("option", year);
+          option.value = year;
+          byId("year").append(option);
+        });
+        selectedYear = years.includes(selectedYear)
+          ? selectedYear
+          : years[0] || "";
+        byId("year").value = selectedYear;
+        byId("year").disabled = !years.length;
+        byId("documents-state").textContent = documents.length
+          ? "Documentos carregados. As ações abrem uma nova aba do Google Drive."
+          : "Consulta concluída. Nenhum holerite disponível.";
+        byId("retry-documents").hidden = false;
+        byId("retry-documents").textContent = "Atualizar documentos";
+        byId("retry-documents").disabled = false;
+        render();
+      });
+    }
+    function safeDocumentUrl(raw, fileId, action) {
+      if (typeof raw !== "string") return null;
+      try {
+        const url = new URL(raw);
+        if (
+          url.protocol !== "https:" ||
+          url.username ||
+          url.password ||
+          url.port ||
+          url.hash
+        )
+          return null;
+        const allowedKeys = new Set([
+          "id",
+          "export",
+          "authuser",
+          "confirm",
+          "usp",
+          "resourcekey",
+        ]);
+        const seenKeys = new Set();
+        for (const [key] of url.searchParams) {
+          if (!allowedKeys.has(key) || seenKeys.has(key)) return null;
+          seenKeys.add(key);
+        }
+        const queryId = url.searchParams.get("id");
+        if (queryId !== null && queryId !== fileId) return null;
+        if (
+          action === "VISUALIZAR" &&
+          url.hostname === "drive.google.com" &&
+          (url.pathname === "/file/d/" + fileId + "/view" ||
+            (url.pathname === "/open" && queryId === fileId))
+        )
+          return url.href;
+        if (
+          action === "BAIXAR" &&
+          queryId === fileId &&
+          ((url.hostname === "drive.google.com" && url.pathname === "/uc") ||
+            (url.hostname === "drive.usercontent.google.com" &&
+              url.pathname === "/download"))
+        )
+          return url.href;
+      } catch (error) {
+        return null;
+      }
+      return null;
+    }
+    function openDocument(fileId, action, button) {
+      if (!authorized) return;
+      clearActions();
+      const token = generation,
+        version = actionVersion;
+      let popup = null;
+      try {
+        popup = window.open("about:blank", "_blank");
+        if (popup) {
+          popup.opener = null;
+          pendingWindows.add(popup);
+        }
+      } catch (error) {
+        closeWindow(popup);
+        popup = null;
+      }
+      pendingButton = button;
+      button.disabled = true;
+      byId("action-state").textContent =
+        "Verificando autorização para abrir o documento…";
+      call("obterLinkHolerite", [fileId, action], token, (response) => {
+        if (version !== actionVersion) {
+          closeWindow(popup);
+          return;
+        }
+        button.disabled = false;
+        pendingButton = null;
+        if (response && response.codigo === "ACESSO_NEGADO") {
+          closeWindow(popup);
+          denySession(true);
+          return;
+        }
+        const url =
+          response &&
+          response.resultado === "SUCESSO" &&
+          response.codigo === "LINK_AUTORIZADO"
+            ? safeDocumentUrl(response.url, fileId, action)
+            : null;
+        if (!url) {
+          closeWindow(popup);
+          const config =
+            response &&
+            ["CONFIGURACAO_PENDENTE", "CONFIGURACAO_INVALIDA"].includes(
+              response.codigo,
+            );
+          byId("action-state").textContent = config
+            ? "A configuração dos documentos precisa ser revisada pelo responsável pelo piloto."
+            : "Não foi possível abrir este documento. Atualize a lista ou tente novamente.";
+          return;
+        }
+        if (popup && !popup.closed) {
+          try {
+            popup.location.replace(url);
+            pendingWindows.delete(popup);
+            byId("action-state").textContent =
+              "Documento autorizado aberto em outra aba do Google Drive.";
+            return;
+          } catch (error) {
+            closeWindow(popup);
+          }
+        }
+        const link = byId("authorized-link");
+        link.hidden = false;
+        link.onclick = () => openDocument(fileId, action, link);
+        byId("action-state").textContent =
+          "A nova aba foi bloqueada ou fechada. Use o botão abaixo para tentar novamente; sua autorização será conferida outra vez.";
+        link.focus();
+      });
     }
     function verify(view, focus) {
       const token = ++generation;
-      clearTimeout(timeout);
+      listVersion++;
       clearData();
       sessionPanel.hidden = false;
       byId("session-heading").textContent = "Verificando acesso";
@@ -221,54 +452,28 @@
         "Aguarde enquanto verificamos sua sessão corporativa.";
       byId("retry").disabled = true;
       if (focus) byId("session-heading").focus();
-      function fail(denied) {
-        if (token !== generation) return;
-        clearTimeout(timeout);
-        generation++;
-        clearData();
-        sessionPanel.hidden = false;
-        byId("session-heading").textContent = denied
-          ? "Acesso negado"
-          : "Não foi possível verificar";
-        byId("session-state").textContent = denied
-          ? "Esta conta não está autorizada neste ambiente. Procure o responsável pelo piloto."
-          : "Houve uma falha ao consultar a sessão. Tente novamente.";
+      call("obterSessao", [], token, (response) => {
+        if (
+          !response ||
+          response.resultado !== "SUCESSO" ||
+          response.codigo !== "SESSAO_AUTORIZADA" ||
+          response.perfil !== "COLABORADOR" ||
+          typeof response.email !== "string" ||
+          !response.email.trim()
+        ) {
+          denySession(!!response);
+          return;
+        }
+        authorized = true;
+        byId("account").textContent = response.email;
+        byId("profile-email").textContent = response.email;
+        sessionPanel.hidden = true;
+        app.hidden = false;
         byId("retry").disabled = false;
-        byId("session-heading").focus();
-      }
-      timeout = setTimeout(() => fail(false), 20000);
-      try {
-        google.script.run
-          .withSuccessHandler((response) => {
-            if (token !== generation) return;
-            if (
-              !response ||
-              response.resultado !== "SUCESSO" ||
-              response.codigo !== "SESSAO_AUTORIZADA" ||
-              response.perfil !== ROLE ||
-              typeof response.email !== "string" ||
-              !response.email.trim()
-            ) {
-              fail(true);
-              return;
-            }
-            clearTimeout(timeout);
-            authorized = true;
-            byId("account").textContent = response.email;
-            if (byId("profile-email"))
-              byId("profile-email").textContent = response.email;
-            sessionPanel.hidden = true;
-            app.hidden = false;
-            byId("retry").disabled = false;
-            requestedView = view;
-            render();
-            showView(view, focus);
-          })
-          .withFailureHandler(() => fail(false))
-          .obterSessao();
-      } catch (error) {
-        fail(false);
-      }
+        requestedView = view;
+        showView(view, focus);
+        loadDocuments();
+      });
     }
     document.querySelectorAll("[data-go]").forEach((button) =>
       button.addEventListener("click", () => {
@@ -280,6 +485,12 @@
     byId("verify-session").addEventListener("click", () =>
       verify(requestedView, true),
     );
+    byId("retry-documents").addEventListener("click", loadDocuments);
+    byId("year").addEventListener("change", () => {
+      selectedYear = byId("year").value;
+      clearActions();
+      render();
+    });
     menuButton.addEventListener("click", () => {
       sidebar.classList.add("open");
       sidebar.setAttribute("role", "dialog");
@@ -310,21 +521,19 @@
         }
       }
     });
-    if (isRh) {
-      byId("search").addEventListener("input", render);
-      byId("sector").addEventListener("change", render);
-      byId("clear-filters").addEventListener("click", () => {
-        byId("search").value = "";
-        byId("sector").value = "";
-        render();
-        byId("search").focus();
-      });
-    } else byId("year").addEventListener("change", render);
+
     window
       .matchMedia("(max-width:767px)")
       .addEventListener("change", (event) => {
         if (!event.matches) closeMenu(false);
       });
+    window.addEventListener("pagehide", () => {
+      generation++;
+      clearData();
+    });
+    window.addEventListener("pageshow", (event) => {
+      if (event.persisted) verify(requestedView, false);
+    });
     verify("overview", false);
   })();
 </script>

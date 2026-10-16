@@ -56,7 +56,7 @@ for (const projeto of ['colaborador', 'rh']) {
     assert.equal(output.metas[0][1], 'width=device-width, initial-scale=1');
     const manifesto = JSON.parse(fs.readFileSync(path.join(root, projeto, 'appsscript.json'), 'utf8'));
     assert.deepEqual(manifesto.webapp, { access: 'DOMAIN', executeAs: 'USER_ACCESSING' });
-    assert.deepEqual(manifesto.oauthScopes, ['https://www.googleapis.com/auth/userinfo.email']);
+    assert.deepEqual(manifesto.oauthScopes, projeto === 'colaborador' ? ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/drive.readonly'] : ['https://www.googleapis.com/auth/userinfo.email']);
     assert.equal(manifesto.timeZone, 'America/Sao_Paulo');
     const publicas = [...fonte.matchAll(/^function (\w+)\(/gm)].map(x => x[1]).filter(x => !x.endsWith('_'));
     assert.deepEqual(publicas.sort(), ['doGet', 'obterSessao']);

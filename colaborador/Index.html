@@ -58,9 +58,19 @@
         </header>
         <main class="page" id="content" tabindex="-1">
           <div class="demo">
-            <strong>Interface de demonstração.</strong> Os nomes, setores e
-            registros abaixo são fictícios. O e-mail da conta conectada é obtido
-            da sessão corporativa.
+            <strong>Ambiente de testes.</strong> Utilize apenas PDFs fictícios.
+            Nome e setor permanecem demonstrativos. A conta conectada e os
+            documentos autorizados são consultados no ambiente Google.
+          </div>
+          <div class="document-feedback">
+            <p id="documents-state" role="status" aria-live="polite"></p>
+            <button type="button" id="retry-documents" hidden>
+              Tentar carregar documentos novamente
+            </button>
+            <p id="action-state" role="status" aria-live="polite"></p>
+            <button type="button" id="authorized-link" hidden>
+              Tentar abrir documento no Google Drive
+            </button>
           </div>
           <section data-view="overview">
             <div class="page-heading">
@@ -92,24 +102,7 @@
             <hr class="divider" />
             <section aria-labelledby="latest-heading">
               <h2 id="latest-heading">Seu último holerite</h2>
-              <div class="latest">
-                <div>
-                  <p class="eyebrow">Folha mensal · exemplo</p>
-                  <p class="month">Setembro de 2026</p>
-                  <p class="muted">
-                    Disponível desde 05/10/2026 · dado fictício
-                  </p>
-                </div>
-                <div>
-                  <div class="actions">
-                    <button type="button" disabled>Baixar PDF</button
-                    ><button type="button" disabled>Visualizar</button>
-                  </div>
-                  <small class="muted"
-                    >Demonstração: nenhum PDF está conectado.</small
-                  >
-                </div>
-              </div>
+              <div id="latest-document"></div>
             </section>
             <hr class="divider" />
             <div class="section-heading">
@@ -129,14 +122,10 @@
               </div>
             </div>
             <label class="field"
-              >Ano de referência<select id="year">
-                <option>2026</option>
-                <option>2025</option>
-                <option>2024</option>
-              </select></label
-            >
+              >Ano de referência<select id="year" disabled></select
+            ></label>
             <p class="muted" style="margin-top: 16px; font-size: 13px">
-              Demonstração: visualização e download indisponíveis.
+              Visualização e download abrem o Google Drive em outra aba.
             </p>
             <div id="history-table"></div>
           </section>
@@ -145,17 +134,19 @@
               <p class="eyebrow">Suporte</p>
               <h1 tabindex="-1">Como podemos ajudar?</h1>
               <p class="muted">
-                Este ambiente apresenta a interface com registros fictícios.
+                Este ambiente de testes consulta apenas documentos autorizados
+                para sua conta.
               </p>
               <hr class="divider" />
-              <h2>Sobre a demonstração</h2>
+              <h2>Sobre o ambiente de testes</h2>
               <ul>
                 <li>
                   Use o menu para navegar e os filtros para explorar as listas.
                 </li>
                 <li>
-                  Documentos e operações administrativas serão conectados nas
-                  próximas etapas.
+                  Visualizar e baixar abrem uma nova aba do Google Drive. Se o
+                  navegador bloquear essa aba, será oferecida uma nova tentativa
+                  com verificação de autorização.
                 </li>
                 <li>
                   Se houver dificuldade de acesso, procure o responsável pelo

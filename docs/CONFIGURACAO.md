@@ -46,3 +46,7 @@ Proposta de fechamento: aprovar apenas arquitetura do piloto com associação ma
 Etapa 02: configurar PILOTO_COLABORADORES_EMAILS somente no projeto do portal e PILOTO_RH_EMAILS somente no projeto RH. Valores JSON de e-mails reais aprovados, definidos diretamente em Script Properties; nenhum valor real no repositório. Manifestos USER_ACCESSING/DOMAIN e escopo único userinfo.email entregues localmente, aplicação remota ainda PENDENTE. Guia: etapas/ETAPA_02.md.
 
 Etapa 03: adicionar arquivos HTML Index, Styles e Scripts em cada projeto e substituir Code.gs da pasta correspondente. Manter propriedades e manifestos existentes, sem escopos novos. Atualizar versão das implantações e seguir matriz de ETAPA_03.md. Configuração remota desta etapa ainda não confirmada.
+
+## Etapa 04 - configuração pendente
+
+Somente portal: adicionar Drive.gs, atualizar três HTML e appsscript.json com serviço Drive API v3/drive.readonly, configurar PILOTO_DRIVE_MAPA privadamente e atualizar implantação/reautorizar leitura. Modelo em exemplos/PILOTO_DRIVE_MAPA.exemplo.json; instruções e matriz A/B em etapas/ETAPA_04.md. Mapa real não foi recebido nem gravado. RH permanece com userinfo.email e não exige atualização.

@@ -54,3 +54,11 @@ Etapa 02 encerrada após confirmação explícita dos testes finais: revogação
 Usuário autorizou interface após fechamento da autenticação. Delegadas implementação frontend, adaptação do backend para templates e revisão de segurança. Registro ETAPA_03.md criado; PROGRESSO consolidado para eliminar ambiguidade de status antigos, preservados no histórico e registros das etapas.
 
 Etapa 03 entregue localmente: três HTML por aplicativo, templates autorizados, 36 testes de backend aprovados e QA Playwright desktop/mobile em prévia simulada. Segurança revisou sem bloqueadores. Adicionado scripts/preview.cjs apenas para inspeção local; documentação de atualização no Google e aceite em ETAPA_03.md. Status AGUARDANDO_TESTE; sem implantação remota pelo agente.
+
+## Início da Etapa 04
+
+Usuário informou interface conferida e pediu próximo passo. Etapa 03 concluída por aceite manual. Iniciada integração de PDFs fictícios Drive no portal com agentes backend/frontend/segurança; sem desenvolvimento de cadastro/Sheets/RH operacional.
+
+## 16/10/2026 - Entrega local da Etapa 04
+
+Implementados Drive.gs/Drive v3 somente leitura no portal e documentos dinâmicos na interface. 72 testes locais simulados aprovados. QA browser com links Google interceptados confirmou viewer/download distintos, ausência de opener, estados de erro/vazio/pendência, filtro preservado e fallback reautorizado após correção de segurança. Mapa privado manual documentado com modelo sem dados reais. RH sem mudanças; status AGUARDANDO_TESTE no Google.

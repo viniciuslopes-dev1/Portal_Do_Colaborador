@@ -27,17 +27,44 @@ const server = http.createServer((req, res) => {
     );
     const mock = `<script>
 window.__previewState = 'ok';
+window.__previewDriveState = 'ok';
+window.__previewLinkState = 'indisponivel';
 window.google = {script: { get run() {
   var success, failure;
+  function respond(method, args) {
+    setTimeout(function() {
+      if (window.__previewState === 'erro') { if (failure) failure(new Error('Simulação local')); return; }
+      if (window.__previewState === 'negado') { if (success) success({resultado:'ERRO',codigo:'ACESSO_NEGADO'}); return; }
+      var response;
+      if (method === 'obterSessao') {
+        response = {resultado:'SUCESSO',codigo:'SESSAO_AUTORIZADA',perfil:'${projeto === "rh" ? "RH" : "COLABORADOR"}',email:window.__previewEmail || 'conta.demo@example.invalid'};
+      } else if (method === 'listarHolerites') {
+        var state = window.__previewDriveState;
+        if (state === 'erro') { if (failure) failure(new Error('Falha de leitura simulada')); return; }
+        if (state === 'config') response = {resultado:'ERRO',codigo:'CONFIGURACAO_PENDENTE'};
+        else response = {resultado:'SUCESSO',codigo:'HOLERITES_LISTADOS',documentos:state === 'vazio' ? [] : (window.__previewDocuments || [
+          {arquivo_id:'arquivo_demo_A_202609',competencia:'2026-09'},
+          {arquivo_id:'arquivo_demo_A_202608',competencia:'2026-08'},
+          {arquivo_id:'arquivo_demo_A_202512',competencia:'2025-12'}
+        ])};
+      } else if (method === 'obterLinkHolerite') {
+        // Não há PDF real na prévia. Somente QA interceptada pode simular links.
+        var linkState = window.__previewLinkState;
+        response = linkState === 'ok' ? {resultado:'SUCESSO',codigo:'LINK_AUTORIZADO',url:args[1] === 'BAIXAR'
+          ? 'https://drive.usercontent.google.com/download?id='+args[0]+'&export=download'
+          : 'https://drive.google.com/file/d/'+args[0]+'/view?usp=drivesdk'}
+          : linkState === 'inseguro' ? {resultado:'SUCESSO',codigo:'LINK_AUTORIZADO',url:'https://example.invalid/indevido'}
+          : {resultado:'ERRO',codigo:'LINK_INDISPONIVEL'};
+      }
+      if (success) success(response);
+    }, 120);
+  }
   var chain = {
     withSuccessHandler: function(fn) {success = fn; return chain;},
     withFailureHandler: function(fn) {failure = fn; return chain;},
-    obterSessao: function() {setTimeout(function() {
-      if (window.__previewState === 'erro') { if (failure) failure(new Error('Simulação local')); return; }
-      if (success) success(window.__previewState === 'negado' ?
-        {resultado:'ERRO',codigo:'ACESSO_NEGADO'} :
-        {resultado:'SUCESSO',codigo:'SESSAO_AUTORIZADA',perfil:'${projeto === "rh" ? "RH" : "COLABORADOR"}',email:window.__previewEmail || 'conta.demo@example.invalid'});
-    }, 120);}
+    obterSessao: function() {respond('obterSessao', []);},
+    listarHolerites: function() {respond('listarHolerites', []);},
+    obterLinkHolerite: function(id, action) {respond('obterLinkHolerite', [id, action]);}
   };
   return chain;
 }}};

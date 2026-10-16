@@ -1,0 +1,22 @@
+[
+  {
+    "email": "teste.a@armazenamentoemnuvem.com",
+    "pasta_id": "SUBSTITUA_PELO_ID_DA_PASTA_A",
+    "documentos": [
+      {
+        "competencia": "2026-09",
+        "arquivo_id": "SUBSTITUA_PELO_ID_DO_PDF_A"
+      }
+    ]
+  },
+  {
+    "email": "teste.b@armazenamentoemnuvem.com",
+    "pasta_id": "SUBSTITUA_PELO_ID_DA_PASTA_B",
+    "documentos": [
+      {
+        "competencia": "2026-09",
+        "arquivo_id": "SUBSTITUA_PELO_ID_DO_PDF_B"
+      }
+    ]
+  }
+]
