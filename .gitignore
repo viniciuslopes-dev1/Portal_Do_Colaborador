@@ -1,0 +1,28 @@
+# Configuração local e credenciais
+.env
+.env.*
+!.env.example
+.clasp.json
+.clasprc.json
+.clasprc.json.*
+*.pem
+*.key
+credentials*.json
+client_secret*.json
+secrets/
+
+# Dependências, caches e saídas locais
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+coverage/
+tmp/
+output/
+*.log
+.DS_Store
+Thumbs.db
+
+# PDFs: somente documentação de referência é versionada
+*.pdf
+!docs/referencias/*.pdf
