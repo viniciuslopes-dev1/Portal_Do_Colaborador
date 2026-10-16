@@ -23,4 +23,4 @@ Pendências futuras: cadastro/funcionario_id e índices confiáveis, atualizaç�
 
 Status permitidos: NAO_INICIADA, EM_ANDAMENTO, AGUARDANDO_TESTE, BLOQUEADA, CONCLUIDA.
 
-Download em diagnóstico: usuário retificou que a opção de baixar também não aparece no próprio Drive. Conferir restrições efetivas do PDF/Drive com RH. Mensagens da interface melhoradas localmente; nenhum bloqueio contornado. Etapa 04 continua AGUARDANDO_TESTE.
+Download confirmado pelo usuário após ajuste da restrição de download de leitores no Drive de teste. Backend manteve canDownload e autorização por identidade. Falta confirmação específica de acesso cruzado A/B por link direto e revogação Drive com link antigo para fechar Etapa 04.

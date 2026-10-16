@@ -132,3 +132,10 @@ QA local adicional: resposta interceptada com Content-Disposition attachment e M
 
 Próximo diagnóstico: com RH/gestor, inspecionar restrição de download do PDF fictício em Compartilhar → Configurações e, se herdada, do Drive compartilhado. Apenas inspecionar primeiro; não mudar políticas globais, tornar público ou dar edição aos funcionários para contornar. Fontes oficiais: https://support.google.com/a/users/answer/13004062?hl=pt-BR e https://support.google.com/drive/answer/15697599?hl=pt-BR . Etapa permanece AGUARDANDO_TESTE até resolução e repetição com A/B.
 
+## 16/10/2026 - Download confirmado no ambiente Google
+
+A captura das configurações do Drive compartilhado mostrou a opção “Pessoas que comentaram e visualizaram” desmarcada no grupo de ações baixar/copiar/imprimir/acesso pelo Gemini. Usuário foi orientado sobre o alcance no Drive de teste e, após o ajuste manual, confirmou “agr esta baixando”. Download real passa a ser CONFIRMADO por relato do usuário; não houve mudança de ACL/configuração pelo agente nem inspeção remota independente.
+
+A restrição de download do Drive explica o impedimento reportado; foi mantida a verificação canDownload no backend. Melhoria de mensagens da interface no commit 3d66439 permanece disponível; sua publicação no Apps Script não foi confirmada. Não é necessário novo consentimento por essa alteração manual de configuração Drive.
+
+O usuário havia reportado os demais testes realizados, mas a conclusão da Etapa 04 ainda requer confirmação específica do isolamento A/B nos links diretos e da revogação de acesso Drive com link antigo. Não inferir esses resultados do sucesso de download. Etapa continua AGUARDANDO_TESTE até confirmação desses critérios.
