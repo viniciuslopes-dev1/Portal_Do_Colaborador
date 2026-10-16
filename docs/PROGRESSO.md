@@ -22,3 +22,5 @@ Próxima ação: usuário atualizar somente projeto do portal, configurar PILOTO
 Pendências futuras: cadastro/funcionario_id e índices confiáveis, atualização/validade/revogação, RH operacional, testes integrados e publicação. Nenhuma etapa futura autorizada.
 
 Status permitidos: NAO_INICIADA, EM_ANDAMENTO, AGUARDANDO_TESTE, BLOQUEADA, CONCLUIDA.
+
+Download em diagnóstico: usuário retificou que a opção de baixar também não aparece no próprio Drive. Conferir restrições efetivas do PDF/Drive com RH. Mensagens da interface melhoradas localmente; nenhum bloqueio contornado. Etapa 04 continua AGUARDANDO_TESTE.

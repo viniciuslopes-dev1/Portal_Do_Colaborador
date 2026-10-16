@@ -121,3 +121,14 @@ Chamada direta para testar referência indevida: no console do navegador, seleci
 ## Situação da entrega
 
 Implementado e validado localmente com mocks. Etapa 04 AGUARDANDO_TESTE, sem implantação/inspeção remota pelo agente. Confirmar matriz real antes de concluir e solicitar autorização para Etapa 05.
+
+## 16/10/2026 - Download em diagnóstico
+
+Usuário reportou testes realizados, com falha somente em Baixar PDF e sintoma inicial “Nada acontece”. Em seguida, retificou a resposta anterior: o PDF também não baixa no visualizador do próprio Drive e o botão de download não aparece. A informação vigente é a ausência de download também no Drive; a hipótese de falha exclusiva do portal foi descartada como não sustentada. Restrição de download do arquivo/Drive/política é hipótese principal, ainda sem inspeção da configuração efetiva.
+
+Revisão não alterou ACL, escopos, canDownload ou validação dos links. Melhorada a interface em Scripts.html: resultado de ação fica visível/focado, erros de LINK_INDISPONIVEL explicam a limitação sem afirmar causa e navegação não é anunciada como download concluído. Tentativa nova continua exigindo autorização; nenhuma URL estática armazenada.
+
+QA local adicional: resposta interceptada com Content-Disposition attachment e MIME application/pdf gerou evento download, suggestedFilename teste-download.pdf e failure=null, mesmo com popup about:blank. Isso comprova somente fluxo browser simulado; não testa PDF real ou ACL Google. Resposta LINK_INDISPONIVEL simulada agora foca action-state, mostra mensagem específica, oferece retry e fecha popup (uma aba restante). Sintaxe cliente aprovada.
+
+Próximo diagnóstico: com RH/gestor, inspecionar restrição de download do PDF fictício em Compartilhar → Configurações e, se herdada, do Drive compartilhado. Apenas inspecionar primeiro; não mudar políticas globais, tornar público ou dar edição aos funcionários para contornar. Fontes oficiais: https://support.google.com/a/users/answer/13004062?hl=pt-BR e https://support.google.com/drive/answer/15697599?hl=pt-BR . Etapa permanece AGUARDANDO_TESTE até resolução e repetição com A/B.
+

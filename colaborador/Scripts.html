@@ -373,6 +373,25 @@
       }
       return null;
     }
+    function announceAction(message, focus = true) {
+      const state = byId("action-state");
+      state.setAttribute("tabindex", "-1");
+      state.textContent = message;
+      state.scrollIntoView({ block: "nearest" });
+      if (focus) state.focus({ preventScroll: true });
+    }
+    function mostrarRetry(fileId, action, token, version) {
+      const retry = byId("authorized-link");
+      retry.textContent =
+        action === "BAIXAR"
+          ? "Tentar baixar PDF novamente"
+          : "Tentar visualizar novamente";
+      retry.hidden = false;
+      retry.onclick = () => {
+        if (authorized && token === generation && version === actionVersion)
+          openDocument(fileId, action, retry);
+      };
+    }
     function openDocument(fileId, action, button) {
       if (!authorized) return;
       clearActions();
@@ -391,8 +410,7 @@
       }
       pendingButton = button;
       button.disabled = true;
-      byId("action-state").textContent =
-        "Verificando autorização para abrir o documento…";
+      announceAction("Verificando autorização para abrir o documento…", false);
       call("obterLinkHolerite", [fileId, action], token, (response) => {
         if (version !== actionVersion) {
           closeWindow(popup);
@@ -418,28 +436,37 @@
             ["CONFIGURACAO_PENDENTE", "CONFIGURACAO_INVALIDA"].includes(
               response.codigo,
             );
-          byId("action-state").textContent = config
-            ? "A configuração dos documentos precisa ser revisada pelo responsável pelo piloto."
-            : "Não foi possível abrir este documento. Atualize a lista ou tente novamente.";
+          mostrarRetry(fileId, action, token, version);
+          announceAction(
+            config
+              ? "A configuração dos documentos precisa ser revisada pelo responsável pelo piloto."
+              : action === "BAIXAR" &&
+                  response &&
+                  response.codigo === "LINK_INDISPONIVEL"
+                ? "O Drive não disponibilizou um link válido de download ou não permitiu essa ação. Verifique se consegue baixar no próprio Drive."
+                : "Não foi possível abrir este documento. Atualize a lista ou tente novamente.",
+          );
           return;
         }
         if (popup && !popup.closed) {
           try {
             popup.location.replace(url);
             pendingWindows.delete(popup);
-            byId("action-state").textContent =
-              "Documento autorizado aberto em outra aba do Google Drive.";
+            mostrarRetry(fileId, action, token, version);
+            announceAction(
+              action === "BAIXAR"
+                ? "Download solicitado ao Google Drive. Confira os downloads do navegador (Ctrl+J). Se não iniciar, tente novamente."
+                : "Abertura solicitada ao Google Drive em outra aba.",
+            );
             return;
           } catch (error) {
             closeWindow(popup);
           }
         }
-        const link = byId("authorized-link");
-        link.hidden = false;
-        link.onclick = () => openDocument(fileId, action, link);
-        byId("action-state").textContent =
-          "A nova aba foi bloqueada ou fechada. Use o botão abaixo para tentar novamente; sua autorização será conferida outra vez.";
-        link.focus();
+        mostrarRetry(fileId, action, token, version);
+        announceAction(
+          "A nova aba foi bloqueada ou fechada. Use o botão abaixo para tentar novamente; sua autorização será conferida outra vez.",
+        );
       });
     }
     function verify(view, focus) {
