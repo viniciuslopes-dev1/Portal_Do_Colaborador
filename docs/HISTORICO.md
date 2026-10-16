@@ -30,3 +30,9 @@ Usuário autorizou continuidade após proposta de fechamento do piloto e início
 Etapa 02 implementada localmente, revisada por segurança e validada por 34 testes simulados (0 falhas). Criado tests/auth.test.cjs e guia de implantação/matriz em ETAPA_02.md. Nenhum teste remoto executado; status AGUARDANDO_TESTE.
 
 Organização solicitada pelo usuário: conteúdo movido da subpasta portal-colaborador para a raiz do workspace. PDF inicial em docs/referencias/ e pedido inicial em docs/INICIAR_PROJETO.md. Criados .gitignore/.gitattributes, README atualizado e rotina de commits/push registrada em AGENTS.md. Aplicativos preservados, sem alteração funcional.
+
+## Teste real reportado - acesso negado nos dois aplicativos
+
+Usuário relatou mensagem “Acesso negado. Não foi possível autorizar esta conta. Procure o responsável pelo piloto.” nos dois aplicativos. Resultado real esperado de sucesso ainda não obtido; contas, propriedades e opções efetivas da implantação não foram inspecionadas pelo agente. Etapa permanece AGUARDANDO_TESTE.
+
+Revisão do código: a mensagem cobre configuração ausente/inválida, conta não listada, identidade vazia/externa/divergente e falha de serviço. Nenhuma causa foi confirmada. Primeira rodada de diagnóstico: conferir nome exato da propriedade no respectivo projeto, array JSON com contas reais aprovadas (sem valores de exemplo), conta conectada e execução como usuário que acessa. Não mudar código ou ampliar autorização antes de identificar a causa. Propriedades são particulares de cada projeto; listas devem ser configuradas separadamente. Fontes oficiais: https://developers.google.com/apps-script/guides/properties e https://developers.google.com/apps-script/guides/web .

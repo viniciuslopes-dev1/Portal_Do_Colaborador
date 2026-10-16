@@ -22,3 +22,5 @@ Próxima ação: usuário copiar arquivos, configurar listas, implantar TESTE e 
 Status permitidos: NAO_INICIADA, EM_ANDAMENTO, AGUARDANDO_TESTE, BLOQUEADA, CONCLUIDA.
 
 Organização: raiz do workspace adotada como raiz Git; documentação inicial em docs/referencias/. Versionamento contínuo autorizado pelo usuário. Status funcional da Etapa 02 permanece AGUARDANDO_TESTE.
+
+Teste real reportado: ambos aplicativos exibem acesso negado. Causa ainda não identificada; em diagnóstico de configuração e identidade. Nenhum sucesso funcional remoto confirmado.

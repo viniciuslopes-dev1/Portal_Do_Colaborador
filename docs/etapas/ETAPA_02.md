@@ -80,3 +80,9 @@ Implementação local e testes simulados concluídos. Etapa AGUARDANDO_TESTE: co
 ## Organização do repositório
 
 Arquivos agora estão diretamente na raiz da pasta de trabalho, sem portal-colaborador intermediária. Caminhos relativos colaborador/, rh/, docs/ e tests/ preservados. Testes devem ser executados na raiz. Reorganização não altera implantação Google ou critérios de aprovação; testes reais continuam pendentes.
+
+## Teste real reportado - acesso negado nos dois aplicativos
+
+Usuário relatou mensagem “Acesso negado. Não foi possível autorizar esta conta. Procure o responsável pelo piloto.” nos dois aplicativos. Resultado real esperado de sucesso ainda não obtido; contas, propriedades e opções efetivas da implantação não foram inspecionadas pelo agente. Etapa permanece AGUARDANDO_TESTE.
+
+Revisão do código: a mensagem cobre configuração ausente/inválida, conta não listada, identidade vazia/externa/divergente e falha de serviço. Nenhuma causa foi confirmada. Primeira rodada de diagnóstico: conferir nome exato da propriedade no respectivo projeto, array JSON com contas reais aprovadas (sem valores de exemplo), conta conectada e execução como usuário que acessa. Não mudar código ou ampliar autorização antes de identificar a causa. Propriedades são particulares de cada projeto; listas devem ser configuradas separadamente. Fontes oficiais: https://developers.google.com/apps-script/guides/properties e https://developers.google.com/apps-script/guides/web .
