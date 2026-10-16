@@ -43,3 +43,7 @@ Etapa 02 concluída conforme relatos explícitos do usuário: identidade A/B/RH,
 ## Etapa 04 - evidência local
 
 72 testes simulados de autorização/Drive aprovados. UI verificada em prévia com API e links interceptados, incluindo fallback que reautoriza e limpa estado após negação. Testes reais de visualização/download, A/B por links diretos e revogação ACL continuam PENDENTES; registrar confirmações em docs/etapas/ETAPA_04.md, sem marcar itens integrados por existência de código.
+
+## Confirmações reais do piloto - Etapa 04
+
+Usuário confirmou download funcional e, explicitamente, bloqueio A↔B por links diretos e revogação Drive bloqueando link antigo. Evidências são relatos manuais consolidados em docs/etapas/ETAPA_04.md. Etapa 04 concluída; itens integrados envolvendo índices/cadastro/RH futuros permanecem pendentes.

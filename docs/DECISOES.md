@@ -42,3 +42,5 @@ D13. Etapa 02 concluída com testes locais e confirmações manuais explícitas 
 D14. Usuário autorizou Etapa 03. Apenas interface com dados fictícios, preservando autenticação, sem operações de etapas futuras. Nome/setor demonstrativos não serão apresentados como dados reais da conta; ações de documentos ainda indisponíveis serão explicitadas.
 
 D15. Usuário validou a Etapa 03 e autorizou Etapa 04. Associação privada manual conta→pasta→documentos somente para PDFs fictícios de teste; não é cadastro nem publicação de índices. Fonte final/cadastro por funcionario_id permanecem para Etapa 05. Apenas portal recebe Drive em leitura; RH não muda.
+
+D16. Etapa 04 concluída por confirmação manual do usuário, incluindo download, isolamento cruzado A/B e revogação de link antigo no Drive. Próxima etapa 05 depende de autorização explícita; mapa temporário não passa a ser cadastro operacional por esse aceite.

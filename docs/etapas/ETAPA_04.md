@@ -2,7 +2,7 @@
 
 ## Identificação
 
-Data: 16/10/2026. Status: AGUARDANDO_TESTE. Usuário validou a Etapa 03 e autorizou o próximo passo. Agentes: backend/lógica, frontend e segurança; configuração e homologação Google feitas pelo usuário.
+Data: 16/10/2026. Status: CONCLUIDA. Usuário validou a Etapa 03 e autorizou o próximo passo. Agentes: backend/lógica, frontend e segurança; configuração e homologação Google feitas pelo usuário.
 
 ## Objetivo e pré-requisitos
 
@@ -139,3 +139,12 @@ A captura das configurações do Drive compartilhado mostrou a opção “Pessoa
 A restrição de download do Drive explica o impedimento reportado; foi mantida a verificação canDownload no backend. Melhoria de mensagens da interface no commit 3d66439 permanece disponível; sua publicação no Apps Script não foi confirmada. Não é necessário novo consentimento por essa alteração manual de configuração Drive.
 
 O usuário havia reportado os demais testes realizados, mas a conclusão da Etapa 04 ainda requer confirmação específica do isolamento A/B nos links diretos e da revogação de acesso Drive com link antigo. Não inferir esses resultados do sucesso de download. Etapa continua AGUARDANDO_TESTE até confirmação desses critérios.
+
+
+## 16/10/2026 - Fechamento confirmado pelo usuário
+
+Usuário respondeu “todos” à rodada final explícita: A não abre PDF de B por link direto e vice-versa; após retirar temporariamente o acesso de A à pasta/PDF no Drive, link previamente copiado também deixa de abrir, com restauração das permissões originais ao final. Cenários confirmados por relato manual, sem inspeção remota independente.
+
+Com os demais testes previamente reportados realizados e o download confirmado após ajuste da restrição do Drive, Etapa 04 CONCLUIDA no piloto. Histórico de falhas e pendências anteriores é preservado e superado pelas confirmações posteriores nos cenários descritos. Não representa homologação de produção ou comprovação das funcionalidades futuras.
+
+Próxima etapa proposta: 05, cadastro privado no Sheets, funcionario_id automático e publicação/associação confiável de índices. Aguardar autorização explícita antes de implementar ou criar recursos dessa etapa.

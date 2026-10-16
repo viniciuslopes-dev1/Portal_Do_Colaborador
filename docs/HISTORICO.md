@@ -80,3 +80,7 @@ A captura das configurações do Drive compartilhado mostrou a opção “Pessoa
 A restrição de download do Drive explica o impedimento reportado; foi mantida a verificação canDownload no backend. Melhoria de mensagens da interface no commit 3d66439 permanece disponível; sua publicação no Apps Script não foi confirmada. Não é necessário novo consentimento por essa alteração manual de configuração Drive.
 
 O usuário havia reportado os demais testes realizados, mas a conclusão da Etapa 04 ainda requer confirmação específica do isolamento A/B nos links diretos e da revogação de acesso Drive com link antigo. Não inferir esses resultados do sucesso de download. Etapa continua AGUARDANDO_TESTE até confirmação desses critérios.
+
+## 16/10/2026 - Etapa 04 concluída
+
+Usuário confirmou explicitamente bloqueio cruzado A/B por link direto e revogação Drive impedindo link antigo. Download e demais testes já reportados. Etapa 04 encerrada no piloto conforme relatos manuais, sem inspeção independente. Etapa 05 aguarda autorização.

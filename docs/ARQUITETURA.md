@@ -61,3 +61,7 @@ HTML separado por aplicativo em Index/Styles/Scripts, com templates montados ape
 Associação temporária privada em Script Properties PILOTO_DRIVE_MAPA fixa conta/pasta/documentos fictícios. Fonte atual é a configuração administrativa, reavaliada em cada chamada; não usa JSON descoberto pelo nome, não acessa planilha RH nem cria índice automático. Drive API v3 no portal, supportsAllDrives e drive.readonly. Antes de retornar links, reautorizar sessão, verificar referência na própria lista e metadados Drive (pasta direta, MIME PDF, sem lixeira/atalho). O Drive continua aplicando ACL no navegador. RH permanece com escopo só e-mail. Mapa manual não é arquitetura operacional final.
 
 Etapa 04 entregue localmente: Drive.gs implementa listarHolerites/obterLinkHolerite, com referência própria antes de IO, metadados PDF/pasta/ACL e links somente retornados pela API. Lista não retorna URLs. Frontend deixa fixtures documentais e usa RPC, com controle de chamadas antigas, limpeza e nova autorização em cada tentativa. 72 testes com mocks e revisão independente concluídos; testes Google reais pendentes.
+
+## Validação manual do Drive piloto
+
+Usuário confirmou funcionamento de download após ajuste de restrição no Drive, isolamento A/B também em links diretos e bloqueio de link antigo após revogação Drive. Etapa 04 concluída por relatos manuais, sem inspeção remota independente. Mapa privado manual permanece temporário até Etapa 05, ainda não autorizada.

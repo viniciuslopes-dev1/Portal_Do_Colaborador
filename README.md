@@ -7,7 +7,7 @@ Portal corporativo para consulta de holerites, com aplicativo separado para RH. 
 - Etapa 01: preparação do piloto concluída conforme confirmação manual do usuário.
 - Etapa 02: autenticação piloto concluída conforme confirmação dos testes manuais.
 - Etapa 03: interface conferida e aceita pelo usuário.
-- Etapa 04: integração de PDFs fictícios no portal implementada, aguardando testes Google; etapas 05 a 08 não iniciadas.
+- Etapa 04: consulta, visualização, download e isolamento dos PDFs fictícios confirmados pelo usuário; etapas 05 a 08 não iniciadas.
 - 72 testes locais simulados aprovados; não comprovam identidade, OAuth ou permissões reais no Google.
 
 ## Estrutura
