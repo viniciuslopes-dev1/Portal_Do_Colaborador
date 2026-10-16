@@ -31,3 +31,7 @@ Testes locais simulados complementam os testes reais; não comprovam permissões
 ## Evidência local - Etapa 02
 
 34 testes simulados aprovados por node --test tests/auth.test.cjs. Não marcar os itens integrados acima como aprovados: identidade, OAuth, links Drive e autorização real permanecem dependentes de teste no Google. Matriz e resultados manuais em docs/etapas/ETAPA_02.md.
+
+## Confirmações manuais da autenticação piloto
+
+Etapa 02 concluída conforme relatos explícitos do usuário: identidade A/B/RH, A/B negados no RH, conta fora da lista e externa negadas, revogação com página aberta e RPC, implantação como visitante e escopo único de e-mail. Evidência consolidada em docs/etapas/ETAPA_02.md. Itens integrados que envolvem funções administrativas e dados/documentos futuros permanecem pendentes; não confundir diagnóstico da sessão RH com operações RH ainda inexistentes.

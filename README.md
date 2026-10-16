@@ -50,3 +50,7 @@ Nunca versionar propriedades privadas, credenciais, PDFs reais de funcionários 
 Repositório: https://github.com/viniciuslopes-dev1/Portal_Do_Colaborador
 
 Criar commits por conjunto coerente de alterações verificadas e publicar o progresso autorizado. Documentar o que está implementado, testado localmente e confirmado no Google. Evitar alterações de etapas futuras sem autorização.
+
+## Fechamento da autenticação piloto
+
+Etapas 01 e 02 concluídas no piloto. Usuário confirmou acessos e bloqueios, revogação via chamada com página aberta e opções de implantação/consentimento. Testes Google por relato manual; 34 testes simulados locais aprovados. Registros de status anteriores preservam o histórico. Próxima etapa: 03, interface com dados fictícios, aguardando autorização.

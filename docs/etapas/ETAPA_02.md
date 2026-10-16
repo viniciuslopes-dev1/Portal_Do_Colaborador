@@ -2,7 +2,7 @@
 
 ## Identificação
 
-Status: AGUARDANDO_TESTE. Escopo autorizado pelo usuário: autenticação do piloto em dois Apps Script separados. Backend implementa; segurança revisa; agente principal valida localmente e documenta. Configuração e implantação remotas serão feitas pelo usuário.
+Status: CONCLUIDA. Escopo autorizado pelo usuário: autenticação do piloto em dois Apps Script separados. Backend implementa; segurança revisa; agente principal valida localmente e documenta. Configuração e implantação remotas serão feitas pelo usuário.
 
 ## Objetivo e pré-requisitos
 
@@ -96,3 +96,12 @@ Essa confirmação supera a falha anterior de acesso nos cenários repetidos pel
 ## Confirmação dos bloqueios de autorização
 
 Usuário respondeu “sim” à pergunta explícita sobre A/B receberem acesso negado no painel RH e conta fora da lista ser negada no portal. Esses dois cenários estão confirmados por relato manual. Não confundir conta fora da lista com conta externa: domínio da conta não foi informado. Permanecem sem confirmação específica o bloqueio externo, revogação com página aberta/RPC e revisão efetiva de implantação/consentimento. Etapa continua AGUARDANDO_TESTE; Etapa 03 não autorizada.
+
+
+## Fechamento da Etapa 02
+
+Usuário respondeu “Tudo certo” à rodada final explícita: remoção temporária de A da lista com página aberta e nova verificação negada, restauração da lista, bloqueio de conta externa e conferência das implantações como usuário que acessa, acesso somente à organização e consentimento apenas para e-mail. Cenários confirmados por relato manual; não houve inspeção remota independente. A verificação após remoção testa reautorização da chamada RPC usada pelo botão, sem inferir teste separado de console.
+
+Somados aos acessos A/B/RH e bloqueios previamente confirmados e aos 34 testes simulados aprovados, critérios da autenticação piloto cumpridos conforme confirmação do usuário. Etapa 02 CONCLUIDA. Registros anteriores de pendências e falhas preservam o histórico e são superados por este fechamento para os cenários explicitamente confirmados. Nenhuma homologação de produção, cadastro ativo, índices ou Drive/Sheets é inferida.
+
+Próxima etapa proposta: 03, interface responsiva com dados fictícios, seguindo design.md apenas como referência visual. Aguardar autorização explícita; ainda NAO_INICIADA.

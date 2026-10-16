@@ -46,3 +46,5 @@ Essa confirmação supera a falha anterior de acesso nos cenários repetidos pel
 ## Confirmação dos bloqueios de autorização
 
 Usuário respondeu “sim” à pergunta explícita sobre A/B receberem acesso negado no painel RH e conta fora da lista ser negada no portal. Esses dois cenários estão confirmados por relato manual. Não confundir conta fora da lista com conta externa: domínio da conta não foi informado. Permanecem sem confirmação específica o bloqueio externo, revogação com página aberta/RPC e revisão efetiva de implantação/consentimento. Etapa continua AGUARDANDO_TESTE; Etapa 03 não autorizada.
+
+Etapa 02 encerrada após confirmação explícita dos testes finais: revogação com página aberta, conta externa bloqueada e implantação/consentimento conferidos. Relatos manuais do usuário e 34 testes locais simulados registrados; sem inspeção independente do Google. Etapa 03 ainda não autorizada.

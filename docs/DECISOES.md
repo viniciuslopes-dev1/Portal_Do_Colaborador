@@ -36,3 +36,5 @@ D10. Etapa 02 limitada à identidade corporativa no servidor e listas explícita
 D11. Comparação das identidades ativa/efetiva é defesa adicional. Não comprova execução como visitante ao testar somente com implantador; testes com contas comuns continuam obrigatórios.
 
 D12. Usuário solicitou organizar o projeto diretamente na raiz e manter commits/push para viniciuslopes-dev1/Portal_Do_Colaborador. Aplicativos em colaborador/ e rh/; documentação em docs/; referências em docs/referencias/; testes em tests/.
+
+D13. Etapa 02 concluída com testes locais e confirmações manuais explícitas de acesso, negação, revogação e implantação. Não representa validação das integrações futuras ou produção. Etapa 03 permanece sujeita a autorização.

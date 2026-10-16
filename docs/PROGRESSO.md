@@ -1,11 +1,11 @@
 # Progresso do projeto novo
 
-Data: 15/10/2026. Etapa atual: 02, autenticação implementada localmente, aguardando testes Google.
+Data: 15/10/2026. Etapa 02 concluída; aguardando autorização para Etapa 03.
 
 | Etapa | Status |
 |---|---|
 | 01 Preparação | CONCLUIDA |
-| 02 Autenticação | AGUARDANDO_TESTE |
+| 02 Autenticação | CONCLUIDA |
 | 03 Interface | NAO_INICIADA |
 | 04 Drive | NAO_INICIADA |
 | 05 Sheets | NAO_INICIADA |
@@ -28,3 +28,6 @@ Teste real reportado: ambos aplicativos exibem acesso negado. Causa ainda não i
 Atualização do diagnóstico: usuário confirmou acessos funcionando após orientação para usar array JSON nas propriedades. Resultado por relato manual, sem inspeção independente. Confirmar explicitamente negação A/B no RH e completar cenários negativos pendentes da matriz antes de concluir Etapa 02.
 
 Bloqueios A/B no RH e conta fora da lista no portal confirmados pelo usuário. Pendentes de confirmação específica: conta externa, revogação/RPC com página aberta e conferência de implantação/consentimento.
+
+
+Fechamento vigente: usuário confirmou a rodada final de revogação via RPC, bloqueio externo e configuração da implantação/consentimento. Etapa 02 CONCLUIDA no piloto, por confirmação manual, sem inspeção remota independente. Pendências anteriores de autenticação foram atendidas pelos relatos posteriores. Etapa 03 continua NAO_INICIADA e depende de autorização explícita; integrações e segurança de produção continuam para etapas futuras.

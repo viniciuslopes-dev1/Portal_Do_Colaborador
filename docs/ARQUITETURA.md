@@ -47,3 +47,7 @@ Associação manual privada no servidor do portal, com IDs fixos e índices edit
 Preparação do piloto aprovada pelo usuário para continuidade. Dois aplicativos independentes com execução como visitante e acesso limitado à organização. Backend obtém Session ativa/efetiva, exige domínio exato e lista explícita configurada no respectivo projeto. Cada chamada pública revalida autorização; não usar identidade fornecida pelo navegador. Comparação de sessão não substitui inspeção da implantação e testes com usuários não proprietários. Autorização por lista de piloto ainda não é validação do cadastro ativo/índice. Nenhuma integração Drive/Sheets nesta etapa.
 
 Etapa 02 implementada localmente: Code.gs independente por projeto, contendo backend e diagnóstico HTML inline. Apenas doGet/obterSessao públicos, autorização reavaliada em ambos. Listas piloto PILOTO_COLABORADORES_EMAILS/PILOTO_RH_EMAILS independentes; validação integral e negação em falha. Revisão de segurança e 34 testes simulados aprovados; execução real/OAuth pendentes.
+
+## Autenticação piloto confirmada
+
+Usuário confirmou identidade/acessos A/B/RH, bloqueios fora das listas e externos, reautorização após remoção e opções de implantação/consentimento. Etapa 02 concluída no piloto por relatos manuais; sem inspeção remota independente. Associação por índice/cadastro e acesso a documentos continuam não implementados.
