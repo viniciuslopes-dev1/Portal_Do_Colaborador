@@ -1,0 +1,330 @@
+<script>
+  (function () {
+    "use strict";
+    const ROLE = "RH";
+    const isRh = ROLE === "RH";
+    const byId = (id) => document.getElementById(id);
+    const app = byId("app");
+    const sessionPanel = byId("session-panel");
+    const sidebar = byId("sidebar");
+    const menuButton = byId("open-menu");
+    let requestedView = "overview";
+    let generation = 0;
+    let authorized = false;
+    let timeout;
+    const documents = [
+      { month: "Setembro", year: "2026", date: "05/10/2026" },
+      { month: "Agosto", year: "2026", date: "04/09/2026" },
+      { month: "Julho", year: "2026", date: "05/08/2026" },
+      { month: "Junho", year: "2026", date: "03/07/2026" },
+      { month: "Dezembro", year: "2025", date: "05/01/2026" },
+      { month: "Novembro", year: "2025", date: "05/12/2025" },
+    ];
+    const people = [
+      {
+        name: "Ana de Exemplo",
+        email: "ana@example.invalid",
+        sector: "Administrativo",
+        status: "Ativo",
+      },
+      {
+        name: "Bruno de Exemplo",
+        email: "bruno@example.invalid",
+        sector: "Operações",
+        status: "Ativo",
+      },
+      {
+        name: "Carla de Exemplo",
+        email: "carla@example.invalid",
+        sector: "Financeiro",
+        status: "Ativo",
+      },
+      {
+        name: "Daniel de Exemplo",
+        email: "daniel@example.invalid",
+        sector: "Operações",
+        status: "Inativo",
+      },
+      {
+        name: "Elisa de Exemplo",
+        email: "elisa@example.invalid",
+        sector: "Administrativo",
+        status: "Ativo",
+      },
+    ];
+    function element(tag, text, className) {
+      const node = document.createElement(tag);
+      if (text !== undefined) node.textContent = text;
+      if (className) node.className = className;
+      return node;
+    }
+    function closeMenu(restore) {
+      sidebar.classList.remove("open");
+      sidebar.removeAttribute("role");
+      sidebar.removeAttribute("aria-modal");
+      document.querySelector(".main").inert = false;
+      menuButton.setAttribute("aria-expanded", "false");
+      if (restore) menuButton.focus();
+    }
+    function table(target, headers, rows, kind, emptyText) {
+      const container = byId(target);
+      container.replaceChildren();
+      if (!rows.length) {
+        container.append(element("p", emptyText, "empty"));
+        return;
+      }
+      const wrap = element("div", undefined, "table-wrap");
+      wrap.tabIndex = 0;
+      wrap.setAttribute("role", "region");
+      wrap.setAttribute(
+        "aria-label",
+        isRh
+          ? "Lista demonstrativa de funcionários"
+          : "Lista demonstrativa de holerites",
+      );
+      const tbl = element("table");
+      const caption = element(
+        "caption",
+        isRh ? "Funcionários fictícios" : "Holerites fictícios",
+      );
+      caption.className = "eyebrow";
+      caption.style.textAlign = "left";
+      caption.style.padding = "12px 0";
+      tbl.append(caption);
+      const head = element("thead");
+      const headRow = element("tr");
+      headers.forEach((label) => {
+        const th = element("th", label);
+        th.scope = "col";
+        headRow.append(th);
+      });
+      head.append(headRow);
+      tbl.append(head);
+      const body = element("tbody");
+      rows.forEach((row) => {
+        const tr = element("tr");
+        if (kind === "people") {
+          const name = element("td", row.name);
+          name.append(element("small", row.email));
+          tr.append(name, element("td", row.sector));
+          const status = element("td");
+          status.append(element("span", row.status, "status"));
+          tr.append(status);
+        } else {
+          tr.append(
+            element("td", row.month + " de " + row.year),
+            element("td", "Folha mensal"),
+            element("td", row.date),
+          );
+          const actions = element("td");
+          ["Visualizar", "Baixar PDF"].forEach((label) => {
+            const button = element("button", label);
+            button.type = "button";
+            button.disabled = true;
+            button.title = "Demonstração: nenhum PDF conectado";
+            actions.append(button);
+          });
+          tr.append(actions);
+        }
+        body.append(tr);
+      });
+      tbl.append(body);
+      wrap.append(tbl);
+      container.append(wrap);
+    }
+    function render() {
+      if (!authorized) return;
+      if (isRh) {
+        const query = byId("search").value.trim().toLocaleLowerCase("pt-BR");
+        const sector = byId("sector").value;
+        const filtered = people.filter(
+          (p) =>
+            (!sector || p.sector === sector) &&
+            (!query ||
+              (p.name + " " + p.email)
+                .toLocaleLowerCase("pt-BR")
+                .includes(query)),
+        );
+        table(
+          "recent-table",
+          ["Funcionário", "Setor", "Situação"],
+          people.slice(0, 3),
+          "people",
+          "Nenhum funcionário.",
+        );
+        table(
+          "history-table",
+          ["Funcionário", "Setor", "Situação"],
+          filtered,
+          "people",
+          "Nenhum funcionário encontrado. Revise a busca ou limpe os filtros.",
+        );
+        byId("result-count").textContent =
+          filtered.length + " de " + people.length + " funcionários fictícios";
+      } else {
+        table(
+          "recent-table",
+          ["Mês de referência", "Tipo", "Disponível desde", "Ações"],
+          documents.slice(1, 4),
+          "documents",
+          "Você ainda não tem holerites disponíveis.",
+        );
+        table(
+          "history-table",
+          ["Mês de referência", "Tipo", "Disponível desde", "Ações"],
+          documents.filter((d) => d.year === byId("year").value),
+          "documents",
+          "Nenhum documento neste período. Selecione outro ano.",
+        );
+      }
+    }
+    function showView(view, focus) {
+      document.querySelectorAll("[data-view]").forEach((section) => {
+        section.hidden = section.dataset.view !== view;
+      });
+      document.querySelectorAll(".nav [data-go]").forEach((button) => {
+        if (button.dataset.go === view)
+          button.setAttribute("aria-current", "page");
+        else button.removeAttribute("aria-current");
+      });
+      byId("breadcrumb").textContent =
+        view === "overview"
+          ? "Visão geral"
+          : view === "help"
+            ? "Ajuda"
+            : isRh
+              ? "Funcionários"
+              : "Holerites";
+      closeMenu(false);
+      if (focus) {
+        const heading = document.querySelector('[data-view="' + view + '"] h1');
+        if (heading) heading.focus();
+      }
+    }
+    function clearData() {
+      authorized = false;
+      app.hidden = true;
+      byId("account").textContent = "";
+      if (byId("profile-email")) byId("profile-email").textContent = "";
+      byId("recent-table").replaceChildren();
+      byId("history-table").replaceChildren();
+      if (byId("result-count")) byId("result-count").textContent = "";
+      closeMenu(false);
+    }
+    function verify(view, focus) {
+      const token = ++generation;
+      clearTimeout(timeout);
+      clearData();
+      sessionPanel.hidden = false;
+      byId("session-heading").textContent = "Verificando acesso";
+      byId("session-state").textContent =
+        "Aguarde enquanto verificamos sua sessão corporativa.";
+      byId("retry").disabled = true;
+      if (focus) byId("session-heading").focus();
+      function fail(denied) {
+        if (token !== generation) return;
+        clearTimeout(timeout);
+        generation++;
+        clearData();
+        sessionPanel.hidden = false;
+        byId("session-heading").textContent = denied
+          ? "Acesso negado"
+          : "Não foi possível verificar";
+        byId("session-state").textContent = denied
+          ? "Esta conta não está autorizada neste ambiente. Procure o responsável pelo piloto."
+          : "Houve uma falha ao consultar a sessão. Tente novamente.";
+        byId("retry").disabled = false;
+        byId("session-heading").focus();
+      }
+      timeout = setTimeout(() => fail(false), 20000);
+      try {
+        google.script.run
+          .withSuccessHandler((response) => {
+            if (token !== generation) return;
+            if (
+              !response ||
+              response.resultado !== "SUCESSO" ||
+              response.codigo !== "SESSAO_AUTORIZADA" ||
+              response.perfil !== ROLE ||
+              typeof response.email !== "string" ||
+              !response.email.trim()
+            ) {
+              fail(true);
+              return;
+            }
+            clearTimeout(timeout);
+            authorized = true;
+            byId("account").textContent = response.email;
+            if (byId("profile-email"))
+              byId("profile-email").textContent = response.email;
+            sessionPanel.hidden = true;
+            app.hidden = false;
+            byId("retry").disabled = false;
+            requestedView = view;
+            render();
+            showView(view, focus);
+          })
+          .withFailureHandler(() => fail(false))
+          .obterSessao();
+      } catch (error) {
+        fail(false);
+      }
+    }
+    document.querySelectorAll("[data-go]").forEach((button) =>
+      button.addEventListener("click", () => {
+        requestedView = button.dataset.go;
+        verify(requestedView, true);
+      }),
+    );
+    byId("retry").addEventListener("click", () => verify(requestedView, true));
+    byId("verify-session").addEventListener("click", () =>
+      verify(requestedView, true),
+    );
+    menuButton.addEventListener("click", () => {
+      sidebar.classList.add("open");
+      sidebar.setAttribute("role", "dialog");
+      sidebar.setAttribute("aria-modal", "true");
+      document.querySelector(".main").inert = true;
+      menuButton.setAttribute("aria-expanded", "true");
+      byId("close-menu").focus();
+    });
+    byId("close-menu").addEventListener("click", () => closeMenu(true));
+    sidebar.addEventListener("keydown", (event) => {
+      if (!sidebar.classList.contains("open")) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu(true);
+      }
+      if (event.key === "Tab") {
+        const items = Array.from(sidebar.querySelectorAll("button")).filter(
+          (el) => !el.disabled,
+        );
+        const first = items[0],
+          last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+    if (isRh) {
+      byId("search").addEventListener("input", render);
+      byId("sector").addEventListener("change", render);
+      byId("clear-filters").addEventListener("click", () => {
+        byId("search").value = "";
+        byId("sector").value = "";
+        render();
+        byId("search").focus();
+      });
+    } else byId("year").addEventListener("change", render);
+    window
+      .matchMedia("(max-width:767px)")
+      .addEventListener("change", (event) => {
+        if (!event.matches) closeMenu(false);
+      });
+    verify("overview", false);
+  })();
+</script>

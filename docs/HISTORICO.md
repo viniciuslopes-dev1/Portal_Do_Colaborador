@@ -48,3 +48,9 @@ Essa confirmação supera a falha anterior de acesso nos cenários repetidos pel
 Usuário respondeu “sim” à pergunta explícita sobre A/B receberem acesso negado no painel RH e conta fora da lista ser negada no portal. Esses dois cenários estão confirmados por relato manual. Não confundir conta fora da lista com conta externa: domínio da conta não foi informado. Permanecem sem confirmação específica o bloqueio externo, revogação com página aberta/RPC e revisão efetiva de implantação/consentimento. Etapa continua AGUARDANDO_TESTE; Etapa 03 não autorizada.
 
 Etapa 02 encerrada após confirmação explícita dos testes finais: revogação com página aberta, conta externa bloqueada e implantação/consentimento conferidos. Relatos manuais do usuário e 34 testes locais simulados registrados; sem inspeção independente do Google. Etapa 03 ainda não autorizada.
+
+## Início da Etapa 03
+
+Usuário autorizou interface após fechamento da autenticação. Delegadas implementação frontend, adaptação do backend para templates e revisão de segurança. Registro ETAPA_03.md criado; PROGRESSO consolidado para eliminar ambiguidade de status antigos, preservados no histórico e registros das etapas.
+
+Etapa 03 entregue localmente: três HTML por aplicativo, templates autorizados, 36 testes de backend aprovados e QA Playwright desktop/mobile em prévia simulada. Segurança revisou sem bloqueadores. Adicionado scripts/preview.cjs apenas para inspeção local; documentação de atualização no Google e aceite em ETAPA_03.md. Status AGUARDANDO_TESTE; sem implantação remota pelo agente.

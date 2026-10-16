@@ -26,3 +26,6 @@ Thumbs.db
 # PDFs: somente documentação de referência é versionada
 *.pdf
 !docs/referencias/*.pdf
+
+# Evidências locais de navegador
+.playwright-cli/

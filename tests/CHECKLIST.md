@@ -35,3 +35,7 @@ Testes locais simulados complementam os testes reais; não comprovam permissões
 ## Confirmações manuais da autenticação piloto
 
 Etapa 02 concluída conforme relatos explícitos do usuário: identidade A/B/RH, A/B negados no RH, conta fora da lista e externa negadas, revogação com página aberta e RPC, implantação como visitante e escopo único de e-mail. Evidência consolidada em docs/etapas/ETAPA_02.md. Itens integrados que envolvem funções administrativas e dados/documentos futuros permanecem pendentes; não confundir diagnóstico da sessão RH com operações RH ainda inexistentes.
+
+## Validação local da interface - Etapa 03
+
+36 testes simulados de autorização/templates aprovados e QA Playwright em prévia local com sessão fictícia: navegação, filtros/vazio, menu móvel/Escape/foco, negação/limpeza e erro/recuperação observados. Revisão independente de segurança sem bloqueadores. Matriz real da nova interface e avaliação do usuário em docs/etapas/ETAPA_03.md permanecem PENDENTES. Não marcar segurança integrada/Drive como validada por esses testes.

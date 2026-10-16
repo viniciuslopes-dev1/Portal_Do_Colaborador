@@ -38,3 +38,5 @@ D11. Comparação das identidades ativa/efetiva é defesa adicional. Não compro
 D12. Usuário solicitou organizar o projeto diretamente na raiz e manter commits/push para viniciuslopes-dev1/Portal_Do_Colaborador. Aplicativos em colaborador/ e rh/; documentação em docs/; referências em docs/referencias/; testes em tests/.
 
 D13. Etapa 02 concluída com testes locais e confirmações manuais explícitas de acesso, negação, revogação e implantação. Não representa validação das integrações futuras ou produção. Etapa 03 permanece sujeita a autorização.
+
+D14. Usuário autorizou Etapa 03. Apenas interface com dados fictícios, preservando autenticação, sem operações de etapas futuras. Nome/setor demonstrativos não serão apresentados como dados reais da conta; ações de documentos ainda indisponíveis serão explicitadas.

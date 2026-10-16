@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Painel administrativo</title>
+    <?!= incluir_('Styles'); ?>
+  </head>
+  <body>
+    <a class="skip" href="#content">Ir para o conteúdo</a>
+    <section
+      class="session"
+      id="session-panel"
+      aria-labelledby="session-heading"
+    >
+      <p class="eyebrow">Painel administrativo</p>
+      <h1 id="session-heading" tabindex="-1">Verificando acesso</h1>
+      <p id="session-state" role="status" aria-live="polite">
+        Aguarde enquanto verificamos sua sessão corporativa.
+      </p>
+      <button type="button" id="retry" disabled>Verificar novamente</button>
+    </section>
+    <div class="layout" id="app" hidden>
+      <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <button type="button" class="menu-close" id="close-menu">
+          Fechar menu
+        </button>
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">P</span
+          ><strong>Painel administrativo</strong>
+        </div>
+        <small>AMBIENTE CORPORATIVO</small>
+        <nav class="nav">
+          <button type="button" data-go="overview" aria-current="page">
+            <span class="nav-icon" aria-hidden="true">⌂</span>Visão geral</button
+          ><button type="button" data-go="records">
+            <span class="nav-icon" aria-hidden="true">≡</span
+            >Funcionários</button
+          ><button type="button" data-go="help">
+            <span class="nav-icon" aria-hidden="true">?</span>Ajuda
+          </button>
+        </nav>
+        <div class="sidebar-bottom">
+          Acesso com conta corporativa.<br />Seus dados merecem cuidado.
+        </div>
+      </aside>
+      <div class="main">
+        <header class="topbar">
+          <button
+            type="button"
+            class="menu-toggle"
+            id="open-menu"
+            aria-controls="sidebar"
+            aria-expanded="false"
+          >
+            ☰ Menu</button
+          ><span class="breadcrumb" id="breadcrumb">Visão geral</span
+          ><span class="account" id="account"></span>
+        </header>
+        <main class="page" id="content" tabindex="-1">
+          <div class="demo">
+            <strong>Interface de demonstração.</strong> Os nomes, setores e
+            registros abaixo são fictícios. O e-mail da conta conectada é obtido
+            da sessão corporativa.
+          </div>
+          <section data-view="overview">
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">Gestão de pessoas</p>
+                <h1 tabindex="-1">Visão geral</h1>
+                <p class="muted">
+                  Uma visão dos cadastros demonstrativos do portal.
+                </p>
+              </div>
+              <p class="muted">Setembro de 2026 · exemplo</p>
+            </div>
+            <div class="metrics">
+              <div class="metric">
+                <span>Funcionários ativos</span><strong>4</strong
+                ><span>Base fictícia desta demonstração</span>
+              </div>
+              <div class="metric">
+                <span>Funcionários inativos</span><strong>1</strong
+                ><span>Base fictícia desta demonstração</span>
+              </div>
+              <div class="metric">
+                <span>Setores representados</span><strong>3</strong
+                ><span>Base fictícia desta demonstração</span>
+              </div>
+            </div>
+            <hr class="divider" />
+            <div class="section-heading">
+              <div>
+                <h2>Funcionários</h2>
+                <p class="muted">Consulte a lista e explore os filtros.</p>
+              </div>
+              <button type="button" data-go="records">
+                Ver todos os funcionários →
+              </button>
+            </div>
+            <div id="recent-table"></div>
+          </section>
+          <section data-view="records" hidden>
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">Pessoas</p>
+                <h1 tabindex="-1">Funcionários</h1>
+                <p class="muted">
+                  Lista demonstrativa, disponível somente para consulta.
+                </p>
+              </div>
+            </div>
+            <div class="filters">
+              <label class="field"
+                >Buscar por nome ou e-mail<input
+                  id="search"
+                  type="search"
+                  placeholder="Digite para buscar"
+                  autocomplete="off" /></label
+              ><label class="field"
+                >Setor<select id="sector">
+                  <option value="">Todos os setores</option>
+                  <option>Administrativo</option>
+                  <option>Operações</option>
+                  <option>Financeiro</option>
+                </select></label
+              ><button type="button" id="clear-filters">Limpar filtros</button>
+            </div>
+            <p
+              id="result-count"
+              role="status"
+              aria-live="polite"
+              class="muted"
+            ></p>
+            <div id="history-table"></div>
+          </section>
+          <section data-view="help" hidden>
+            <div class="help-body">
+              <p class="eyebrow">Suporte</p>
+              <h1 tabindex="-1">Como podemos ajudar?</h1>
+              <p class="muted">
+                Este ambiente apresenta a interface com registros fictícios.
+              </p>
+              <hr class="divider" />
+              <h2>Sobre a demonstração</h2>
+              <ul>
+                <li>
+                  Use o menu para navegar e os filtros para explorar as listas.
+                </li>
+                <li>
+                  Documentos e operações administrativas serão conectados nas
+                  próximas etapas.
+                </li>
+                <li>
+                  Se houver dificuldade de acesso, procure o responsável pelo
+                  piloto pelos canais internos da sua empresa.
+                </li>
+              </ul>
+              <p>
+                Para conferir se sua conta continua autorizada, use “Verificar
+                sessão” abaixo.
+              </p>
+            </div>
+          </section>
+          <div class="session-footer">
+            <button type="button" id="verify-session">Verificar sessão</button
+            ><span>Autorização confirmada nesta consulta.</span>
+          </div>
+          <footer class="footer">
+            Informações de uso interno · Portal do colaborador
+          </footer>
+        </main>
+      </div>
+    </div>
+    <?!= incluir_('Scripts'); ?>
+  </body>
+</html>

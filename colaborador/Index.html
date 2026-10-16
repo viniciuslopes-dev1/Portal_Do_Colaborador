@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portal do colaborador</title>
+    <?!= incluir_('Styles'); ?>
+  </head>
+  <body>
+    <a class="skip" href="#content">Ir para o conteúdo</a>
+    <section
+      class="session"
+      id="session-panel"
+      aria-labelledby="session-heading"
+    >
+      <p class="eyebrow">Portal do colaborador</p>
+      <h1 id="session-heading" tabindex="-1">Verificando acesso</h1>
+      <p id="session-state" role="status" aria-live="polite">
+        Aguarde enquanto verificamos sua sessão corporativa.
+      </p>
+      <button type="button" id="retry" disabled>Verificar novamente</button>
+    </section>
+    <div class="layout" id="app" hidden>
+      <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <button type="button" class="menu-close" id="close-menu">
+          Fechar menu
+        </button>
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">P</span
+          ><strong>Portal do colaborador</strong>
+        </div>
+        <small>AMBIENTE CORPORATIVO</small>
+        <nav class="nav">
+          <button type="button" data-go="overview" aria-current="page">
+            <span class="nav-icon" aria-hidden="true">⌂</span>Visão geral</button
+          ><button type="button" data-go="records">
+            <span class="nav-icon" aria-hidden="true">≡</span>Holerites</button
+          ><button type="button" data-go="help">
+            <span class="nav-icon" aria-hidden="true">?</span>Ajuda
+          </button>
+        </nav>
+        <div class="sidebar-bottom">
+          Acesso com conta corporativa.<br />Seus dados merecem cuidado.
+        </div>
+      </aside>
+      <div class="main">
+        <header class="topbar">
+          <button
+            type="button"
+            class="menu-toggle"
+            id="open-menu"
+            aria-controls="sidebar"
+            aria-expanded="false"
+          >
+            ☰ Menu</button
+          ><span class="breadcrumb" id="breadcrumb">Visão geral</span
+          ><span class="account" id="account"></span>
+        </header>
+        <main class="page" id="content" tabindex="-1">
+          <div class="demo">
+            <strong>Interface de demonstração.</strong> Os nomes, setores e
+            registros abaixo são fictícios. O e-mail da conta conectada é obtido
+            da sessão corporativa.
+          </div>
+          <section data-view="overview">
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">Seu espaço</p>
+                <h1 tabindex="-1">Olá, seja bem-vindo.</h1>
+                <p class="muted">
+                  Suas informações e documentos em um só lugar.
+                </p>
+              </div>
+            </div>
+            <div class="profile">
+              <div class="avatar" aria-hidden="true">EX</div>
+              <dl>
+                <div>
+                  <dt>Nome demonstrativo</dt>
+                  <dd>Pessoa de exemplo</dd>
+                </div>
+                <div>
+                  <dt>Setor demonstrativo</dt>
+                  <dd>Administrativo</dd>
+                </div>
+                <div>
+                  <dt>Conta conectada</dt>
+                  <dd id="profile-email"></dd>
+                </div>
+              </dl>
+            </div>
+            <hr class="divider" />
+            <section aria-labelledby="latest-heading">
+              <h2 id="latest-heading">Seu último holerite</h2>
+              <div class="latest">
+                <div>
+                  <p class="eyebrow">Folha mensal · exemplo</p>
+                  <p class="month">Setembro de 2026</p>
+                  <p class="muted">
+                    Disponível desde 05/10/2026 · dado fictício
+                  </p>
+                </div>
+                <div>
+                  <div class="actions">
+                    <button type="button" disabled>Baixar PDF</button
+                    ><button type="button" disabled>Visualizar</button>
+                  </div>
+                  <small class="muted"
+                    >Demonstração: nenhum PDF está conectado.</small
+                  >
+                </div>
+              </div>
+            </section>
+            <hr class="divider" />
+            <div class="section-heading">
+              <h2>Holerites anteriores</h2>
+              <button type="button" data-go="records">
+                Ver histórico completo →
+              </button>
+            </div>
+            <div id="recent-table"></div>
+          </section>
+          <section data-view="records" hidden>
+            <div class="page-heading">
+              <div>
+                <p class="eyebrow">Documentos</p>
+                <h1 tabindex="-1">Histórico de holerites</h1>
+                <p class="muted">Consulte as competências por ano.</p>
+              </div>
+            </div>
+            <label class="field"
+              >Ano de referência<select id="year">
+                <option>2026</option>
+                <option>2025</option>
+                <option>2024</option>
+              </select></label
+            >
+            <p class="muted" style="margin-top: 16px; font-size: 13px">
+              Demonstração: visualização e download indisponíveis.
+            </p>
+            <div id="history-table"></div>
+          </section>
+          <section data-view="help" hidden>
+            <div class="help-body">
+              <p class="eyebrow">Suporte</p>
+              <h1 tabindex="-1">Como podemos ajudar?</h1>
+              <p class="muted">
+                Este ambiente apresenta a interface com registros fictícios.
+              </p>
+              <hr class="divider" />
+              <h2>Sobre a demonstração</h2>
+              <ul>
+                <li>
+                  Use o menu para navegar e os filtros para explorar as listas.
+                </li>
+                <li>
+                  Documentos e operações administrativas serão conectados nas
+                  próximas etapas.
+                </li>
+                <li>
+                  Se houver dificuldade de acesso, procure o responsável pelo
+                  piloto pelos canais internos da sua empresa.
+                </li>
+              </ul>
+              <p>
+                Para conferir se sua conta continua autorizada, use “Verificar
+                sessão” abaixo.
+              </p>
+            </div>
+          </section>
+          <div class="session-footer">
+            <button type="button" id="verify-session">Verificar sessão</button
+            ><span>Autorização confirmada nesta consulta.</span>
+          </div>
+          <footer class="footer">
+            Informações de uso interno · Portal do colaborador
+          </footer>
+        </main>
+      </div>
+    </div>
+    <?!= incluir_('Scripts'); ?>
+  </body>
+</html>

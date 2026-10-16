@@ -51,3 +51,7 @@ Etapa 02 implementada localmente: Code.gs independente por projeto, contendo bac
 ## Autenticação piloto confirmada
 
 Usuário confirmou identidade/acessos A/B/RH, bloqueios fora das listas e externos, reautorização após remoção e opções de implantação/consentimento. Etapa 02 concluída no piloto por relatos manuais; sem inspeção remota independente. Associação por índice/cadastro e acesso a documentos continuam não implementados.
+
+## Interface da Etapa 03
+
+HTML separado por aplicativo em Index/Styles/Scripts, com templates montados apenas após autorização no doGet. Includes privados por allowlist, sem seleção por parâmetros externos. obterSessao mantém reautorização. Fixtures client-side são somente demonstração; não representam cadastro, documentos reais ou integração. Sem escopos adicionais.

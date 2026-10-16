@@ -1,13 +1,15 @@
 const DOMINIO_CORPORATIVO_ = 'armazenamentoemnuvem.com';
 const PROPRIEDADE_PERMITIDOS_ = 'PILOTO_RH_EMAILS';
 
-/** Entrada do piloto: autentica antes de entregar o diagnóstico. */
+/** Autoriza antes de avaliar o template fixo da interface. */
 function doGet() {
   const sessao = autorizarSessao_();
   if (sessao.resultado !== 'SUCESSO') {
     return HtmlService.createHtmlOutput('<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>Acesso negado</title><main><h1>Acesso negado</h1><p>Não foi possível autorizar esta conta. Procure o responsável pelo piloto.</p></main></html>');
   }
-  return HtmlService.createHtmlOutput(paginaDiagnostico_()).setTitle('Painel RH — piloto');
+  return HtmlService.createTemplateFromFile('Index').evaluate()
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+    .setTitle('Painel RH — piloto');
 }
 
 /** Não aceita identidade, perfil ou autorização enviados pelo navegador. */
@@ -56,37 +58,10 @@ function negar_() {
   return { resultado: 'ERRO', codigo: 'ACESSO_NEGADO', mensagem: 'Não foi possível autorizar esta conta. Procure o responsável pelo piloto.' };
 }
 
-function paginaDiagnostico_() {
-  return `<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Painel RH — piloto</title></head>
-<body><main><h1>Painel RH — piloto</h1><p>Diagnóstico de autenticação — Etapa 02</p><p id="estado" role="status" aria-live="polite">Verificando sessão...</p><button type="button" id="verificar">Verificar novamente</button></main>
-<script>
-(function () {
-  'use strict';
-  var estado = document.getElementById('estado');
-  var botao = document.getElementById('verificar');
-  function falhou() {
-    estado.textContent = 'Não foi possível autorizar esta conta. Procure o responsável pelo piloto.';
-    botao.disabled = false;
+/** Inclusão privada restrita aos fragmentos estáticos da interface. */
+function incluir_(nome) {
+  if (nome !== 'Styles' && nome !== 'Scripts') {
+    throw new Error('RECURSO_NAO_PERMITIDO');
   }
-  function verificar() {
-    botao.disabled = true;
-    estado.textContent = 'Verificando sessão...';
-    try {
-      google.script.run.withSuccessHandler(function (resposta) {
-        botao.disabled = false;
-        if (!resposta || resposta.resultado !== 'SUCESSO' || resposta.codigo !== 'SESSAO_AUTORIZADA') {
-          falhou();
-          return;
-        }
-        estado.textContent = 'Sessão autorizada: ' + resposta.email + ' | Perfil: ' + resposta.perfil;
-      }).withFailureHandler(falhou).obterSessao();
-    } catch (erro) {
-      falhou();
-    }
-  }
-  botao.addEventListener('click', verificar);
-  verificar();
-}());
-</script></body></html>`;
+  return HtmlService.createHtmlOutputFromFile(nome).getContent();
 }
