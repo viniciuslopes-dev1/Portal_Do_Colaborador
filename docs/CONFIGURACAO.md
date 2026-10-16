@@ -50,3 +50,11 @@ Etapa 03: adicionar arquivos HTML Index, Styles e Scripts em cada projeto e subs
 ## Etapa 04 - configuração pendente
 
 Somente portal: adicionar Drive.gs, atualizar três HTML e appsscript.json com serviço Drive API v3/drive.readonly, configurar PILOTO_DRIVE_MAPA privadamente e atualizar implantação/reautorizar leitura. Modelo em exemplos/PILOTO_DRIVE_MAPA.exemplo.json; instruções e matriz A/B em etapas/ETAPA_04.md. Mapa real não foi recebido nem gravado. RH permanece com userinfo.email e não exige atualização.
+
+## Etapa 05 - configuração vigente
+
+O roteiro atual é [ETAPA_05.md](etapas/ETAPA_05.md). Configurar RH antes de trocar a versão do portal. RH: PILOTO_RH_EMAILS, RH_PLANILHA_ID, RH_RAIZ_HOLERITES_ID e INDICES_DRIVE_ID; Drive API v3, Sheets e consentimento novo. Portal: INDICES_DRIVE_ID e Drive v3 readonly. As propriedades PILOTO_DRIVE_MAPA e PILOTO_COLABORADORES_EMAILS são ignoradas pelo código atual; podem permanecer para referência privada, sem nova autorização.
+
+Entradas temporárias privadas PILOTO_CADASTROS_JSON e PILOTO_VINCULOS_JSON habilitam os helpers de editor; não versionar os valores. Não alterar/remover PILOTO_OP_*: preservam operações nas retomadas. Nenhuma propriedade cria trigger. Renovar índices em até 24h manualmente. Validar exclusividade de escrita em todo o Drive confiável e privacidade da planilha antes de cadastrar.
+
+Valores de identificação são informados pelo usuário somente nas propriedades Google, nunca no repositório. Usar PDFs fictícios; não liberar produção nesta etapa.

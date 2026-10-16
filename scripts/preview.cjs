@@ -28,6 +28,7 @@ const server = http.createServer((req, res) => {
     const mock = `<script>
 window.__previewState = 'ok';
 window.__previewDriveState = 'ok';
+window.__previewProfileState = 'ok';
 window.__previewLinkState = 'indisponivel';
 window.google = {script: { get run() {
   var success, failure;
@@ -38,14 +39,18 @@ window.google = {script: { get run() {
       var response;
       if (method === 'obterSessao') {
         response = {resultado:'SUCESSO',codigo:'SESSAO_AUTORIZADA',perfil:'${projeto === "rh" ? "RH" : "COLABORADOR"}',email:window.__previewEmail || 'conta.demo@example.invalid'};
+      } else if (method === 'obterPerfil') {
+        response = window.__previewProfileState === 'ok'
+          ? {resultado:'SUCESSO',codigo:'PERFIL_AUTORIZADO',perfil:{nome:'Pessoa de Demonstração',setor:'Operações',email:window.__previewEmail || 'conta.demo@example.invalid'}}
+          : {resultado:'ERRO',codigo:window.__previewProfileState};
       } else if (method === 'listarHolerites') {
         var state = window.__previewDriveState;
         if (state === 'erro') { if (failure) failure(new Error('Falha de leitura simulada')); return; }
         if (state === 'config') response = {resultado:'ERRO',codigo:'CONFIGURACAO_PENDENTE'};
         else response = {resultado:'SUCESSO',codigo:'HOLERITES_LISTADOS',documentos:state === 'vazio' ? [] : (window.__previewDocuments || [
-          {arquivo_id:'arquivo_demo_A_202609',competencia:'2026-09'},
-          {arquivo_id:'arquivo_demo_A_202608',competencia:'2026-08'},
-          {arquivo_id:'arquivo_demo_A_202512',competencia:'2025-12'}
+          {arquivo_id:'arquivo_demo_A_202609',competencia:'2026-09',data_disponibilizacao:'2026-10-01T12:00:00.000Z'},
+          {arquivo_id:'arquivo_demo_A_202608',competencia:'2026-08',data_disponibilizacao:'2026-09-01T12:00:00.000Z'},
+          {arquivo_id:'arquivo_demo_A_202512',competencia:'2025-12',data_disponibilizacao:'2026-01-01T12:00:00.000Z'}
         ])};
       } else if (method === 'obterLinkHolerite') {
         // Não há PDF real na prévia. Somente QA interceptada pode simular links.
@@ -63,6 +68,7 @@ window.google = {script: { get run() {
     withSuccessHandler: function(fn) {success = fn; return chain;},
     withFailureHandler: function(fn) {failure = fn; return chain;},
     obterSessao: function() {respond('obterSessao', []);},
+    obterPerfil: function() {respond('obterPerfil', []);},
     listarHolerites: function() {respond('listarHolerites', []);},
     obterLinkHolerite: function(id, action) {respond('obterLinkHolerite', [id, action]);}
   };

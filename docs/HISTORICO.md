@@ -84,3 +84,11 @@ O usuário havia reportado os demais testes realizados, mas a conclusão da Etap
 ## 16/10/2026 - Etapa 04 concluída
 
 Usuário confirmou explicitamente bloqueio cruzado A/B por link direto e revogação Drive impedindo link antigo. Download e demais testes já reportados. Etapa 04 encerrada no piloto conforme relatos manuais, sem inspeção independente. Etapa 05 aguarda autorização.
+
+## 16/10/2026 - Etapa 05 entregue para homologação
+
+Usuário autorizou a Etapa 05 após confirmação da Etapa 04. Agentes especializados implementaram persistência RH, integração de perfil no portal, roteiro Google e revisão de segurança. Criadas Dados.gs/Piloto.gs no RH e Indices.gs no portal. UUID automático reservado sob bloqueio, operações retomáveis, quatro abas privadas e índice individual com validade de 24 horas. RH ganha consentimento Drive/Sheets; portal mantém somente leitura e substitui mapa/lista piloto por índice obrigatório. Nenhuma configuração Google foi executada pelo agente.
+
+93 testes locais simulados aprovados; revisão independente de segurança sem bloqueadores. QA Playwright da prévia confirmou perfil/datas, bloqueio simulado de índice vencido, limpeza de perfil/documentos e recuperação; largura móvel390px sem overflow. Prévia usa identidade e documentos fictícios, não comprova Google.
+
+Fonte de confiança requer escrita exclusiva RH/técnicos em todo Drive aprovado, inclusive concessões diretas em descendentes. Sem assinatura ou fallback antigo. Índices renovados manualmente pelo RH; vencimento no portal não revoga PDFs Drive. API media real, OAuth, ACLs, repetição e cenários A/B pendentes no roteiro ETAPA_05.md. Estado AGUARDANDO_TESTE; Etapa06 não iniciada.

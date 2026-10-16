@@ -16,3 +16,13 @@
 - Teste e produção separados; só dados fictícios até homologação. Testar restauração e permissões antes de reabrir acesso.
 
 Checklist integrado: [testes](../tests/CHECKLIST.md). Recursos e políticas de compartilhamento dependem de validação do Workspace. Não contornar restrição usando identidade privilegiada ou abertura da pasta principal.
+
+## Controles implementados na Etapa 05
+
+Fonte do índice restrita por INDICES_DRIVE_ID e premissa obrigatória de escrita exclusiva RH/admin em toda a árvore. Localização/canEdit não provam autoria isoladamente: conferir também concessões diretas em descendentes. Cópia Meu Drive é ignorada. Sem assinatura, fallback ao mapa antigo, cache autorizativo ou serviço executado como proprietário.
+
+Gate exige índice ativo, destinatário exato, esquema fechado, validade de 24h e versão estável; ambiguidade nega. Planilha permanece privada e não é consultada pelo portal. RH confere ACL dos recursos antes de publicar, valida campos e rejeita fórmulas, duplicidades e referências inválidas. Cada escrita exige RH explícito e ScriptLock.
+
+Expiração/inatividade do índice impede novas chamadas do portal, mas não encerra leitura de PDFs por links previamente obtidos. Revogar Drive continua obrigatório. Etapa05 não implementa inativação nem transferência de conta; não usar edição isolada da planilha como revogação.
+
+Revisão especializada e 93 testes simulados passaram; OAuth, media v3 real e isolamento Google ainda não homologados. Critérios manuais na Etapa05.

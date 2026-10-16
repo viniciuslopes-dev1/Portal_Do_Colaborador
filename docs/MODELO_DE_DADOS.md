@@ -41,3 +41,11 @@ evento_id, data, responsavel, acao, funcionario_id quando aplicável, documento_
 
 Backend valida tipos, comprimentos, referências, campos permitidos e conteúdo que poderia virar fórmula. Sheets não impõe chaves estrangeiras: rejeitar holerite órfão e ID duplicado no código.
 Mudança de e-mail conserva funcionario_id, mas atualiza permissões e índices, revogando associações antigas. E-mail reaproveitado por outra pessoa exige novo ID e nenhum acesso ao histórico anterior. Recontratação da mesma pessoa depende de decisão do RH sobre o vínculo.
+
+## Implementação Etapa 05
+
+As quatro abas acima são criadas por prepararBase com cabeçalhos exatos; não reorganizar colunas nem inserir fórmulas. Funcionarios.ativo usa SIM/NAO; índice JSON usa boolean. O índice tem schema_version=1, indice_id, funcionario_id, email, nome, setor, ativo, revisao, emitido_em/valido_ate ISO UTC, pasta_id e documentos (id,competencia,arquivo_id,nome_arquivo,data_upload). Máximo 100 documentos e 64 KiB; datas da interface em America/Sao_Paulo.
+
+Operacoes guarda resumo SHA256 do pedido e recursos/flags de criação para retomada. Reservas contam na detecção de colisão de UUID. Auditoria registra conclusão administrativa; não é trilha inviolável nem auditoria externa. Não editar recursos/IDs de operações parciais para forçar repetição.
+
+Nesta etapa data_upload registra o momento de associação do PDF fictício já existente, não a data original de upload do arquivo no Drive. Revisão incrementa ao registrar documento; renovar validade conserva a revisão de conteúdo e o ID do índice.

@@ -65,3 +65,17 @@ Etapa 04 entregue localmente: Drive.gs implementa listarHolerites/obterLinkHoler
 ## Validação manual do Drive piloto
 
 Usuário confirmou funcionamento de download após ajuste de restrição no Drive, isolamento A/B também em links diretos e bloqueio de link antigo após revogação Drive. Etapa 04 concluída por relatos manuais, sem inspeção remota independente. Mapa privado manual permanece temporário até Etapa 05, ainda não autorizada.
+
+## Etapa 05 - implementação vigente (aguardando teste Google)
+
+A descrição do mapa da Etapa 04 acima é histórica. O portal não o lê mais. Code.gs autentica a conta corporativa e exige um índice ativo antes de entregar template, sessão, perfil, lista ou link. Cada endpoint lê novamente o índice; somente nome/setor/e-mail saem pelo obterPerfil. funcionario_id e conteúdo integral do índice não são enviados à interface.
+
+RH grava quatro abas privadas (Funcionarios/Holerites/Operacoes/Auditoria). Dados.gs concentra autorização RH, validação, reserva UUID, ScriptLock, retomada por operação e publicação. Piloto.gs oferece execução pelo editor usando configurações privadas, sem formulários RH ou gatilhos.
+
+Portal descobre portal-indice.json pela API v3 no corpus do visitante e percorre todas as páginas, limitado a 20 páginas/2000 candidatos. Aceita somente arquivos do Drive confiável fixado, não editáveis pelo visitante, com esquema fechado de até 64 KiB. Confere versão e parentesco antes/depois da leitura e rejeita múltiplos índices para a conta, índice vencido/inativo ou busca incompleta. Não exige leitura da raiz administrativa. PDFs têm parentesco direto, origem, MIME, capacidades e links validados novamente.
+
+A confiança depende de somente RH/admin aprovados poderem escrever em TODO o Drive configurado, inclusive permissões diretas em descendentes. Este requisito é administrativo e deve ser confirmado no Google; não há assinatura criptográfica. O publicador verifica ACL da planilha, pasta individual, índice e PDFs, rejeitando destinatários adicionais e compartilhamentos amplos. A/B só recebem reader da própria pasta.
+
+Índice de 24h publicado no mesmo ID. renovarIndicesPiloto_ renova manualmente ativos. Expiração impede acesso no portal, mas não revoga ACL nem links Drive; inativação exige revogação Drive e tratamento integrado na etapa seguinte. Editar somente ativo na planilha não muda um índice já publicado.
+
+93 testes locais simulados e revisão de segurança aprovados. API media real, OAuth/Drive compartilhado, identidade e ACL dependem de homologação manual; nenhum acesso ao ambiente Google foi realizado pelo agente.

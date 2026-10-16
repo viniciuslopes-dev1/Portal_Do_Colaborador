@@ -44,3 +44,12 @@ D14. Usuário autorizou Etapa 03. Apenas interface com dados fictícios, preserv
 D15. Usuário validou a Etapa 03 e autorizou Etapa 04. Associação privada manual conta→pasta→documentos somente para PDFs fictícios de teste; não é cadastro nem publicação de índices. Fonte final/cadastro por funcionario_id permanecem para Etapa 05. Apenas portal recebe Drive em leitura; RH não muda.
 
 D16. Etapa 04 concluída por confirmação manual do usuário, incluindo download, isolamento cruzado A/B e revogação de link antigo no Drive. Próxima etapa 05 depende de autorização explícita; mapa temporário não passa a ser cadastro operacional por esse aceite.
+
+## Etapa 05 autorizada - 16/10/2026
+
+D17. Usuário autorizou Etapa 05 após conclusão da Etapa 04. Cadastro e persistência backend entram nesta etapa; painel RH operacional permanece para Etapa 06.
+D18. Fonte confiável: Drive compartilhado fixado em INDICES_DRIVE_ID, com escrita EXCLUSIVA de RH/técnicos aprovados em toda a árvore. Nome do JSON só permite descoberta; validar localização, destinatário, parentesco, esquema, capacidade de edição, versão estável e validade. Cópias fora da origem não autorizam. Premissa de escrita exclusiva precisa de confirmação manual; driveId isolado não atesta autoria.
+D19. Índice fixo por pessoa, atualizado no mesmo arquivo, validade máxima de 24 horas e renovação manual pelo RH nesta etapa. Sem fallback ao mapa/allowlist de colaboradores da Etapa 04, sem cache de autorização e sem gatilhos automáticos.
+D20. funcionario_id é UUID completo gerado no servidor, com colisões verificadas inclusive nas reservas sob ScriptLock. Operações preservam ID/recursos em retomadas; falha incerta de criação não recria às cegas. Hashes de pedidos são controle de repetição, não assinatura de índices.
+D21. Planilha só RH explícito; novo consentimento RH Drive completo + Sheets para criar/publicar/compartilhar e persistir. Portal mantém somente e-mail e Drive readonly. Não executar como proprietário.
+D22. Cadastro piloto cria novas pastas FUNC_uuid. Associar um PDF fictício por A/B por cópia manual e registro guiado; nenhuma exclusão ou migração automática dos arquivos da Etapa 04. Inativação e troca de e-mail com revogação integrada ficam para Etapa 06.

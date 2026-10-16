@@ -47,3 +47,16 @@ Etapa 02 concluída conforme relatos explícitos do usuário: identidade A/B/RH,
 ## Confirmações reais do piloto - Etapa 04
 
 Usuário confirmou download funcional e, explicitamente, bloqueio A↔B por links diretos e revogação Drive bloqueando link antigo. Evidências são relatos manuais consolidados em docs/etapas/ETAPA_04.md. Etapa 04 concluída; itens integrados envolvendo índices/cadastro/RH futuros permanecem pendentes.
+
+## Etapa 05 - pendente no Google
+
+- [x] 93 testes locais simulados: autenticação, índice/origem/validade/paginação, links, persistência/UUID/retomada e helpers privados.
+- [x] Revisão especializada sem bloqueadores de autorização/ACL/idempotência.
+- [ ] Conferir OAuth RH e Drive API v3, media JSON real e publicação no mesmo ID.
+- [ ] Escrita exclusiva RH/admin em TODO Drive confiável, incluindo permissões diretas abaixo da raiz.
+- [ ] A/B não abrem planilha; acessam apenas próprio índice/pasta/PDF; cruzados negados.
+- [ ] Repetir cadastros/registros conserva UUID, pastas, operação e documento sem duplicar.
+- [ ] Índice ausente, expirado, inativo ou ambíguo nega; cópia externa não autoriza.
+- [ ] Revogar Drive impede link antigo; restaurar piloto com reader individual e renovar índices.
+
+Roteiro e registro de evidências: docs/etapas/ETAPA_05.md. Testes locais não substituem os itens manuais.

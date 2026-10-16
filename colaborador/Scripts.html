@@ -76,12 +76,15 @@
       app.hidden = true;
       byId("account").textContent = "";
       byId("profile-email").textContent = "";
+      byId("profile-name").textContent = "";
+      byId("profile-sector").textContent = "";
+      byId("profile-avatar").textContent = "";
       clearDocuments();
       byId("documents-state").textContent = "";
       byId("retry-documents").hidden = true;
       closeMenu(false);
     }
-    function denySession(denied) {
+    function denySession(denied, response) {
       generation++;
       listVersion++;
       clearData();
@@ -92,6 +95,9 @@
       byId("session-state").textContent = denied
         ? "Esta conta não está autorizada neste ambiente. Procure o responsável pelo piloto."
         : "Houve uma falha ao consultar a sessão. Tente novamente.";
+      if (response && response.codigo !== "ACESSO_NEGADO")
+        byId("session-state").textContent =
+          "Não foi possível validar seu cadastro neste ambiente. Procure o responsável pelo piloto para revisar o acesso.";
       byId("retry").disabled = false;
       byId("session-heading").focus();
     }
@@ -172,7 +178,7 @@
         tr.append(
           element("td", competencyLabel(row.competencia)),
           element("td", "Folha mensal"),
-          element("td", "Não informada"),
+          element("td", publicationDate(row.data_disponibilizacao)),
         );
         const actions = element("td");
         actions.append(documentActions(row));
@@ -194,7 +200,11 @@
         description.append(
           element("p", "Folha mensal", "eyebrow"),
           element("p", competencyLabel(row.competencia), "month"),
-          element("p", "Data de disponibilização não informada.", "muted"),
+          element(
+            "p",
+            "Disponível desde " + publicationDate(row.data_disponibilizacao),
+            "muted",
+          ),
         );
         block.append(description, documentActions(row));
         latest.append(block);
@@ -244,9 +254,45 @@
         if (heading) heading.focus();
       }
     }
+    function profileDenied(response) {
+      return (
+        !!response &&
+        [
+          "ACESSO_NEGADO",
+          "INDICE_AUSENTE",
+          "INDICE_INVALIDO",
+          "INDICE_AMBIGUO",
+          "INDICE_EXPIRADO",
+          "INDICE_INATIVO",
+          "INDICE_INDISPONIVEL",
+          "CONFIGURACAO_PENDENTE",
+        ].includes(response.codigo)
+      );
+    }
+    function validDate(value) {
+      if (
+        typeof value !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value)
+      )
+        return false;
+      const parsed = new Date(value);
+      return (
+        Number.isFinite(parsed.getTime()) &&
+        parsed.toISOString() ===
+          (value.includes(".") ? value : value.replace("Z", ".000Z"))
+      );
+    }
+    function publicationDate(value) {
+      return new Intl.DateTimeFormat("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }).format(new Date(value));
+    }
     function documentError(response) {
-      if (response && response.codigo === "ACESSO_NEGADO") {
-        denySession(true);
+      if (profileDenied(response)) {
+        denySession(true, response);
         return;
       }
       const config =
@@ -288,6 +334,7 @@
               !/^[A-Za-z0-9_-]{10,200}$/.test(row.arquivo_id) ||
               typeof row.competencia !== "string" ||
               !/^\d{4}-(0[1-9]|1[0-2])$/.test(row.competencia) ||
+              !validDate(row.data_disponibilizacao) ||
               seen.has(row.arquivo_id)
             )
               return false;
@@ -302,6 +349,7 @@
           .map((row) => ({
             arquivo_id: row.arquivo_id,
             competencia: row.competencia,
+            data_disponibilizacao: row.data_disponibilizacao,
           }))
           .sort((a, b) => b.competencia.localeCompare(a.competencia));
         const years = Array.from(
@@ -418,9 +466,9 @@
         }
         button.disabled = false;
         pendingButton = null;
-        if (response && response.codigo === "ACESSO_NEGADO") {
+        if (profileDenied(response)) {
           closeWindow(popup);
-          denySession(true);
+          denySession(true, response);
           return;
         }
         const url =
@@ -486,20 +534,50 @@
           response.codigo !== "SESSAO_AUTORIZADA" ||
           response.perfil !== "COLABORADOR" ||
           typeof response.email !== "string" ||
+          response.email.length > 254 ||
           !response.email.trim()
         ) {
           denySession(!!response);
           return;
         }
-        authorized = true;
-        byId("account").textContent = response.email;
-        byId("profile-email").textContent = response.email;
-        sessionPanel.hidden = true;
-        app.hidden = false;
-        byId("retry").disabled = false;
-        requestedView = view;
-        showView(view, focus);
-        loadDocuments();
+        byId("session-state").textContent = "Verificando seu cadastro…";
+        call("obterPerfil", [], token, (profileResponse) => {
+          const profile = profileResponse && profileResponse.perfil;
+          if (
+            !profileResponse ||
+            profileResponse.resultado !== "SUCESSO" ||
+            profileResponse.codigo !== "PERFIL_AUTORIZADO" ||
+            !profile ||
+            typeof profile.nome !== "string" ||
+            !profile.nome.trim() ||
+            profile.nome.length > 180 ||
+            typeof profile.setor !== "string" ||
+            !profile.setor.trim() ||
+            profile.setor.length > 100 ||
+            typeof profile.email !== "string" ||
+            profile.email.length > 254 ||
+            profile.email !== response.email
+          ) {
+            denySession(!!profileResponse, profileResponse);
+            return;
+          }
+          authorized = true;
+          byId("account").textContent = profile.email;
+          byId("profile-email").textContent = profile.email;
+          byId("profile-name").textContent = profile.nome;
+          byId("profile-sector").textContent = profile.setor;
+          const names = profile.nome.trim().split(/\s+/);
+          byId("profile-avatar").textContent = (
+            Array.from(names[0])[0] +
+            (names.length > 1 ? Array.from(names[names.length - 1])[0] : "")
+          ).toLocaleUpperCase("pt-BR");
+          sessionPanel.hidden = true;
+          app.hidden = false;
+          byId("retry").disabled = false;
+          requestedView = view;
+          showView(view, focus);
+          loadDocuments();
+        });
       });
     }
     document.querySelectorAll("[data-go]").forEach((button) =>
