@@ -24,3 +24,5 @@ Status permitidos: NAO_INICIADA, EM_ANDAMENTO, AGUARDANDO_TESTE, BLOQUEADA, CONC
 Organização: raiz do workspace adotada como raiz Git; documentação inicial em docs/referencias/. Versionamento contínuo autorizado pelo usuário. Status funcional da Etapa 02 permanece AGUARDANDO_TESTE.
 
 Teste real reportado: ambos aplicativos exibem acesso negado. Causa ainda não identificada; em diagnóstico de configuração e identidade. Nenhum sucesso funcional remoto confirmado.
+
+Atualização do diagnóstico: usuário confirmou acessos funcionando após orientação para usar array JSON nas propriedades. Resultado por relato manual, sem inspeção independente. Confirmar explicitamente negação A/B no RH e completar cenários negativos pendentes da matriz antes de concluir Etapa 02.

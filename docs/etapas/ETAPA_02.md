@@ -86,3 +86,10 @@ Arquivos agora estão diretamente na raiz da pasta de trabalho, sem portal-colab
 Usuário relatou mensagem “Acesso negado. Não foi possível autorizar esta conta. Procure o responsável pelo piloto.” nos dois aplicativos. Resultado real esperado de sucesso ainda não obtido; contas, propriedades e opções efetivas da implantação não foram inspecionadas pelo agente. Etapa permanece AGUARDANDO_TESTE.
 
 Revisão do código: a mensagem cobre configuração ausente/inválida, conta não listada, identidade vazia/externa/divergente e falha de serviço. Nenhuma causa foi confirmada. Primeira rodada de diagnóstico: conferir nome exato da propriedade no respectivo projeto, array JSON com contas reais aprovadas (sem valores de exemplo), conta conectada e execução como usuário que acessa. Não mudar código ou ampliar autorização antes de identificar a causa. Propriedades são particulares de cada projeto; listas devem ser configuradas separadamente. Fontes oficiais: https://developers.google.com/apps-script/guides/properties e https://developers.google.com/apps-script/guides/web .
+
+## Resultado do diagnóstico e confirmação do usuário
+
+A captura enviada mostrou o valor de PILOTO_RH_EMAILS começando como string entre aspas, sem o colchete inicial do array exigido. Orientado corrigir para lista JSON, inclusive com uma única conta, salvar propriedades e conferir o mesmo formato no portal. Depois da orientação, o usuário informou “perfeito, tudo funcionando”. Registrado como sucesso dos acessos reportados pelo usuário após a correção; sem inspeção remota independente e sem registrar e-mails reais da captura.
+
+Essa confirmação supera a falha anterior de acesso nos cenários repetidos pelo usuário. Não comprova individualmente toda a matriz: conta externa, interno não listado, remoção de autorização com página aberta e chamada direta negada permanecem sem resultado específico. Etapa 02 continua AGUARDANDO_TESTE até fechar esses critérios. Não há autorização presumida para Etapa 03.
+
