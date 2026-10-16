@@ -26,3 +26,5 @@ Organização: raiz do workspace adotada como raiz Git; documentação inicial e
 Teste real reportado: ambos aplicativos exibem acesso negado. Causa ainda não identificada; em diagnóstico de configuração e identidade. Nenhum sucesso funcional remoto confirmado.
 
 Atualização do diagnóstico: usuário confirmou acessos funcionando após orientação para usar array JSON nas propriedades. Resultado por relato manual, sem inspeção independente. Confirmar explicitamente negação A/B no RH e completar cenários negativos pendentes da matriz antes de concluir Etapa 02.
+
+Bloqueios A/B no RH e conta fora da lista no portal confirmados pelo usuário. Pendentes de confirmação específica: conta externa, revogação/RPC com página aberta e conferência de implantação/consentimento.

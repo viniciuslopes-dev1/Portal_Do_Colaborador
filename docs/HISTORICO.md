@@ -43,3 +43,6 @@ A captura enviada mostrou o valor de PILOTO_RH_EMAILS começando como string ent
 
 Essa confirmação supera a falha anterior de acesso nos cenários repetidos pelo usuário. Não comprova individualmente toda a matriz: conta externa, interno não listado, remoção de autorização com página aberta e chamada direta negada permanecem sem resultado específico. Etapa 02 continua AGUARDANDO_TESTE até fechar esses critérios. Não há autorização presumida para Etapa 03.
 
+## Confirmação dos bloqueios de autorização
+
+Usuário respondeu “sim” à pergunta explícita sobre A/B receberem acesso negado no painel RH e conta fora da lista ser negada no portal. Esses dois cenários estão confirmados por relato manual. Não confundir conta fora da lista com conta externa: domínio da conta não foi informado. Permanecem sem confirmação específica o bloqueio externo, revogação com página aberta/RPC e revisão efetiva de implantação/consentimento. Etapa continua AGUARDANDO_TESTE; Etapa 03 não autorizada.
