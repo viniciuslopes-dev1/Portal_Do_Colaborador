@@ -96,3 +96,9 @@ Fonte de confiança requer escrita exclusiva RH/técnicos em todo Drive aprovado
 ## Diagnóstico de prepararBase
 
 Usuário informou execução concluída sem criação das abas no Google. Causa ainda não identificada. prepararBase retornava erros seguros sem mostrar o retorno no editor; acrescentado log somente resultado/codigo para permitir diagnóstico, sem identidade, IDs ou detalhes de exceção. Roteiro atualizado; Etapa05 permanece AGUARDANDO_TESTE.
+
+## Comandos de piloto no editor RH
+
+Usuário não encontrou executarCadastrosPiloto_ na seleção de funções. Adicionados comandos sem sufixo executarCadastrosPiloto, executarVinculosPiloto e renovarIndicesPiloto, delegando às implementações privadas que continuam autenticando antes de qualquer IO. Expostos também via RPC, porém sem argumentos e sujeitos à mesma autorização RH; não ampliam permissões. Guia atualizado; cadastro A/B ainda pendente de confirmação.
+
+Validação da alteração: 94 testes locais simulados aprovados, incluindo bloqueio dos três novos comandos para não RH antes de leitura de propriedades ou chamadas administrativas.

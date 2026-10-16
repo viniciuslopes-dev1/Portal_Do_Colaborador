@@ -194,3 +194,18 @@ test("renovação retorna somente códigos de cada posição", () => {
     "resultado",
   ]);
 });
+
+test("comandos do editor sem sufixo negam não RH antes de IO", () => {
+  const { ctx, s } = ambiente();
+  s.autorizado = false;
+  for (const nome of [
+    "executarCadastrosPiloto",
+    "executarVinculosPiloto",
+    "renovarIndicesPiloto",
+  ]) {
+    const r = ctx[nome]();
+    assert.equal(r[0].codigo, "ACESSO_NEGADO");
+  }
+  assert.equal(s.leituras, 0);
+  assert.equal(s.calls.length, 0);
+});

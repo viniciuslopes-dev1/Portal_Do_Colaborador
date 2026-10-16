@@ -76,6 +76,6 @@ Portal descobre portal-indice.json pela API v3 no corpus do visitante e percorre
 
 A confiança depende de somente RH/admin aprovados poderem escrever em TODO o Drive configurado, inclusive permissões diretas em descendentes. Este requisito é administrativo e deve ser confirmado no Google; não há assinatura criptográfica. O publicador verifica ACL da planilha, pasta individual, índice e PDFs, rejeitando destinatários adicionais e compartilhamentos amplos. A/B só recebem reader da própria pasta.
 
-Índice de 24h publicado no mesmo ID. renovarIndicesPiloto_ renova manualmente ativos. Expiração impede acesso no portal, mas não revoga ACL nem links Drive; inativação exige revogação Drive e tratamento integrado na etapa seguinte. Editar somente ativo na planilha não muda um índice já publicado.
+Índice de 24h publicado no mesmo ID. renovarIndicesPiloto renova manualmente ativos. Expiração impede acesso no portal, mas não revoga ACL nem links Drive; inativação exige revogação Drive e tratamento integrado na etapa seguinte. Editar somente ativo na planilha não muda um índice já publicado.
 
 93 testes locais simulados e revisão de segurança aprovados. API media real, OAuth/Drive compartilhado, identidade e ACL dependem de homologação manual; nenhum acesso ao ambiente Google foi realizado pelo agente.

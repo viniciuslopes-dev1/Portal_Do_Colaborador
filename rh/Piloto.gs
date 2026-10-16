@@ -1,4 +1,17 @@
-/** Utilitários privados para execução guiada pelo editor. Não criam telas ou gatilhos. */
+/** Comandos sem argumentos para selecionar no editor; todos exigem autorização RH. */
+function executarCadastrosPiloto() {
+  return executarCadastrosPiloto_();
+}
+
+function executarVinculosPiloto() {
+  return executarVinculosPiloto_();
+}
+
+function renovarIndicesPiloto() {
+  return renovarIndicesPiloto_();
+}
+
+/** Implementações privadas. Não criam telas ou gatilhos. */
 function executarCadastrosPiloto_() {
   const sessao = autorizarSessao_();
   if (sessao.resultado !== "SUCESSO")

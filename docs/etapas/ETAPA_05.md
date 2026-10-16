@@ -61,7 +61,7 @@ Adicione no projeto RH a propriedade `PILOTO_CADASTROS_JSON` com este formato, s
 ]
 ```
 
-No editor RH, execute `executarCadastrosPiloto_`. Confira o resumo por posição no registro de execução e a aba Funcionarios. O servidor cria funcionario_id, pasta `FUNC_<uuid>` e `portal-indice.json`, publica índice por 24 horas e concede leitura individual. Não digite nem invente UUID. Se houver resultado PARCIAL, preserve os dados e propriedades `PILOTO_OP_*`; corrija a causa e repita com a mesma conta e pedido. Não apague recursos para tentar novamente.
+No editor RH, execute `executarCadastrosPiloto`. Confira o resumo por posição no registro de execução e a aba Funcionarios. O servidor cria funcionario_id, pasta `FUNC_<uuid>` e `portal-indice.json`, publica índice por 24 horas e concede leitura individual. Não digite nem invente UUID. Se houver resultado PARCIAL, preserve os dados e propriedades `PILOTO_OP_*`; corrija a causa e repita com a mesma conta e pedido. Não apague recursos para tentar novamente.
 
 ### 4. Copiar e vincular os PDFs fictícios
 
@@ -76,7 +76,7 @@ Adicione no RH `PILOTO_VINCULOS_JSON`:
 ]
 ```
 
-Substitua os marcadores pelos IDs reais das novas cópias. Execute `executarVinculosPiloto_` no editor RH. O helper resolve funcionario_id pelo cadastro ativo, registra o PDF e republica o índice; não faz upload ou substituição. Confira Holerites, Operacoes e Auditoria. Não adicione outro PDF antes de registrar o primeiro. Repetir o mesmo pedido deve retomar a operação sem duplicar registros.
+Substitua os marcadores pelos IDs reais das novas cópias. Execute `executarVinculosPiloto` no editor RH. O helper resolve funcionario_id pelo cadastro ativo, registra o PDF e republica o índice; não faz upload ou substituição. Confira Holerites, Operacoes e Auditoria. Não adicione outro PDF antes de registrar o primeiro. Repetir o mesmo pedido deve retomar a operação sem duplicar registros.
 
 ### 5. Atualizar o portal e implantações
 
@@ -88,7 +88,7 @@ Nos dois projetos, use Implantar → Gerenciar implantações → Editar → Nov
 
 ### 6. Renovação do piloto
 
-Os índices vencem em 24 horas e o portal nega acesso após o vencimento. Para continuar o piloto, execute manualmente `renovarIndicesPiloto_` no editor RH: ele republica os cadastros ativos. Não há gatilho automático nesta etapa. Não altere a validade no código para contornar vencimento.
+Os índices vencem em 24 horas e o portal nega acesso após o vencimento. Para continuar o piloto, execute manualmente `renovarIndicesPiloto` no editor RH: ele republica os cadastros ativos. Não há gatilho automático nesta etapa. Não altere a validade no código para contornar vencimento.
 
 ## Testes e critérios de aceitação
 
