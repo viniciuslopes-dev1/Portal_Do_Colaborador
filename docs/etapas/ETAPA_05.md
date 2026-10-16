@@ -48,7 +48,7 @@ Exemplo ilustrativo de allowlist: `["rh.teste@armazenamentoemnuvem.com"]`. Subst
 
 O manifesto RH agora solicita `userinfo.email`, `drive` e `spreadsheets`. Haverá novo consentimento para leitura/escrita no Drive e Sheets; isso é necessário para criação/publicação/ACLs desta etapa. O portal permanece com e-mail e `drive.readonly`. Não reduza erros de permissão executando como proprietário.
 
-No editor RH, conectado com a conta aprovada, selecione e execute `prepararBase`. Autorize os novos escopos. Confira as abas `Funcionarios`, `Holerites`, `Operacoes` e `Auditoria`, com cabeçalhos gerados. Não digite cabeçalhos, fórmulas ou UUIDs manualmente. Uma aba vazia inicial do Google Sheets pode permanecer; não é usada.
+No editor RH, conectado com a conta aprovada, selecione e execute `prepararBase`. Autorize os novos escopos. No registro deve aparecer `{"resultado":"SUCESSO","codigo":"BASE_PREPARADA"}`. Apenas “Execução concluída” não comprova sucesso; se aparecer ERRO, informar somente o código exibido para diagnóstico. Confira as abas `Funcionarios`, `Holerites`, `Operacoes` e `Auditoria`, com cabeçalhos gerados. Não digite cabeçalhos, fórmulas ou UUIDs manualmente. Uma aba vazia inicial do Google Sheets pode permanecer; não é usada.
 
 ### 3. Cadastrar A/B automaticamente
 

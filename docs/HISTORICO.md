@@ -92,3 +92,7 @@ Usuário autorizou a Etapa 05 após confirmação da Etapa 04. Agentes especiali
 93 testes locais simulados aprovados; revisão independente de segurança sem bloqueadores. QA Playwright da prévia confirmou perfil/datas, bloqueio simulado de índice vencido, limpeza de perfil/documentos e recuperação; largura móvel390px sem overflow. Prévia usa identidade e documentos fictícios, não comprova Google.
 
 Fonte de confiança requer escrita exclusiva RH/técnicos em todo Drive aprovado, inclusive concessões diretas em descendentes. Sem assinatura ou fallback antigo. Índices renovados manualmente pelo RH; vencimento no portal não revoga PDFs Drive. API media real, OAuth, ACLs, repetição e cenários A/B pendentes no roteiro ETAPA_05.md. Estado AGUARDANDO_TESTE; Etapa06 não iniciada.
+
+## Diagnóstico de prepararBase
+
+Usuário informou execução concluída sem criação das abas no Google. Causa ainda não identificada. prepararBase retornava erros seguros sem mostrar o retorno no editor; acrescentado log somente resultado/codigo para permitir diagnóstico, sem identidade, IDs ou detalhes de exceção. Roteiro atualizado; Etapa05 permanece AGUARDANDO_TESTE.

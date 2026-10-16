@@ -50,7 +50,7 @@ const CABECALHOS_RH_ = {
 };
 
 function prepararBase() {
-  return executarRh_(function (sessao, config) {
+  const resposta = executarRh_(function (sessao, config) {
     const base = SpreadsheetApp.openById(config.planilha);
     Object.keys(CABECALHOS_RH_).forEach(function (nome) {
       let aba = base.getSheetByName(nome);
@@ -67,6 +67,11 @@ function prepararBase() {
     SpreadsheetApp.flush();
     return { resultado: "SUCESSO", codigo: "BASE_PREPARADA" };
   });
+  // O editor não exibe o retorno: registrar somente status e código seguro.
+  console.log(
+    JSON.stringify({ resultado: resposta.resultado, codigo: resposta.codigo }),
+  );
+  return resposta;
 }
 
 function cadastrarFuncionario(dados, operacaoId) {
