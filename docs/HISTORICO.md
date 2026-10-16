@@ -1,5 +1,11 @@
 # Histórico do projeto novo
 
+## 16/10/2026 - Coleção explicativa em PDF
+
+A pedido do usuário, criada documentação consolidada do projeto e das oito etapas: guia geral com 16 páginas e oito manuais individuais (33 páginas no conjunto). Conteúdo inclui objetivos, tecnologias, arquitetura, identificadores sem matrícula, procedimentos, evidências, testes e pendências. Etapas 06 a 08 descritas exclusivamente como planejamento; Etapa 05 permanece AGUARDANDO_TESTE. PDF inicial preservado.
+
+Fonte editável em docs/GUIA_DO_PROJETO_E_ETAPAS.md; gerador local em scripts/gerar_documentacao_pdf.py; nove PDFs versionados em docs/referencias/atualizada/ e pacote ZIP local em output/pdf/. Conferidos extração de texto, sumário, links, limites de página e renderização Poppler das páginas. Revisão visual feita sobre as páginas renderizadas; sem sobreposição ou corte observado. Não houve mudança nos aplicativos, implantação Google ou novos resultados de testes funcionais. Próxima ação de desenvolvimento permanece a matriz manual da Etapa 05.
+
 ## 15/10/2026 - Base documental de partida
 
 Consolidados requisitos, regras, modelo sem matrícula e plano incremental em pacote independente a pedido do usuário. funcionario_id será automático e permanente; login por e-mail corporativo. Não houve reaproveitamento de código/configurações do protótipo, criação de recursos Google ou execução de testes funcionais.

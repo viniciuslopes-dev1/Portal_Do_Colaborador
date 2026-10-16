@@ -46,6 +46,7 @@ Para configurar a planilha privada, cadastrar A/B e publicar índices, siga a [E
 
 ## Documentação
 
+- [Guia explicativo do projeto e das oito etapas](docs/GUIA_DO_PROJETO_E_ETAPAS.md), com [PDF completo](docs/referencias/atualizada/Portal_do_Colaborador_Documentacao_Completa.pdf) e PDFs individuais em `docs/referencias/atualizada/`. Edição de 16/10/2026; etapas 06 a 08 são planejamento, sem implementação autorizada por esta entrega.
 - [Progresso](docs/PROGRESSO.md), [histórico](docs/HISTORICO.md) e [decisões](docs/DECISOES.md).
 - [Requisitos](docs/REQUISITOS.md), [arquitetura](docs/ARQUITETURA.md), [fluxos](docs/LOGICA_DO_SISTEMA.md) e [modelo de dados](docs/MODELO_DE_DADOS.md).
 - [Segurança](docs/SEGURANCA.md), [configuração](docs/CONFIGURACAO.md) e [checklist](tests/CHECKLIST.md).

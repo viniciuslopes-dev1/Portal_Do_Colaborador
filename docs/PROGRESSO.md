@@ -26,3 +26,7 @@ Etapa 05 autorizada e implementada localmente: Sheets privado RH, UUID automáti
 Pendências futuras: RH operacional (telas, upload e inativação), renovação automatizada, testes integrados e publicação.
 
 Status permitidos: NAO_INICIADA, EM_ANDAMENTO, AGUARDANDO_TESTE, BLOQUEADA, CONCLUIDA.
+
+## Documentação explicativa - 16/10/2026
+
+Criado guia consolidado do projeto e das oito etapas, com PDF geral e oito manuais individuais. Etapas 01 a 04 descritas como concluídas no piloto, Etapa 05 aguardando teste Google e 06 a 08 somente planejadas. Esta entrega documental não altera os status, não executa testes Google e não autoriza implementação futura. Fonte editável em GUIA_DO_PROJETO_E_ETAPAS.md; PDFs em referencias/atualizada/.

@@ -79,3 +79,7 @@ A confiança depende de somente RH/admin aprovados poderem escrever em TODO o Dr
 Índice de 24h publicado no mesmo ID. renovarIndicesPiloto renova manualmente ativos. Expiração impede acesso no portal, mas não revoga ACL nem links Drive; inativação exige revogação Drive e tratamento integrado na etapa seguinte. Editar somente ativo na planilha não muda um índice já publicado.
 
 93 testes locais simulados e revisão de segurança aprovados. API media real, OAuth/Drive compartilhado, identidade e ACL dependem de homologação manual; nenhum acesso ao ambiente Google foi realizado pelo agente.
+
+## Representação documental - 16/10/2026
+
+O guia GUIA_DO_PROJETO_E_ETAPAS.md e seus PDFs explicam a arquitetura vigente e distinguem a associação temporária da Etapa 04 do índice da Etapa 05. Propostas históricas acima devem ser lidas junto às atualizações posteriores. Não houve alteração de arquitetura ou código nesta entrega; capítulos 06 a 08 descrevem apenas planejamento.
